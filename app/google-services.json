@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "795460130994",
+    "firebase_url": "https://stellar-chemist-164609.firebaseio.com",
+    "project_id": "stellar-chemist-164609",
+    "storage_bucket": "stellar-chemist-164609.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795460130994:android:b0eee5ea1fefc8b7",
+        "android_client_info": {
+          "package_name": "com.example.admin.carpooling2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795460130994-oaaosmn37fmbl3biv2i6g9db03goenv2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUsr80mvxN9H-NazqZy47f7Q_wt86HEnI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

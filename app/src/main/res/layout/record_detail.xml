@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <fragment
+        android:id="@+id/mapRecordDetailFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_weight="0.41" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageView2Detail"
+            android:layout_width="64dp"
+            android:layout_height="56dp"
+            app:srcCompat="@drawable/ic_menu_gallery"
+            tools:layout_editor_absoluteY="2dp"
+            tools:layout_editor_absoluteX="2dp" />
+
+        <TextView
+            android:id="@+id/textViewMoneyDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+            android:text="300000"
+            app:layout_constraintLeft_toRightOf="@+id/textViewPriceDetail"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewToDetail" />
+
+        <TextView
+            android:id="@+id/textViewOriginDetail"
+            android:layout_width="145dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintLeft_toRightOf="@+id/imageView2Detail"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDestinationDetail"
+            android:layout_width="145dp"
+            android:layout_height="17dp"
+            android:text=""
+            app:layout_constraintLeft_toRightOf="@+id/textViewToDetail"
+            android:layout_marginLeft="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textViewNameDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="0dp"
+            android:text="Phạm Hoài Nguyên"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2Detail" />
+
+        <TextView
+            android:id="@+id/textViewPriceDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá: "
+            app:layout_constraintLeft_toRightOf="@+id/textViewVehicleDetail"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOriginDetail" />
+
+        <TextView
+            android:id="@+id/textViewToDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="đến"
+            app:layout_constraintLeft_toRightOf="@+id/textViewOriginDetail"
+            android:layout_marginLeft="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/textViewVehicleDetail"
+            android:layout_width="70dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintLeft_toRightOf="@+id/imageView2Detail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewOriginDetail" />
+
+        <TextView
+            android:id="@+id/textViewPriceUnitDetail"
+            android:layout_width="59dp"
+            android:layout_height="17dp"
+            android:text="VNĐ/Chỗ"
+            app:layout_constraintLeft_toRightOf="@+id/textViewMoneyDetail"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDestinationDetail" />
+
+        <TextView
+            android:id="@+id/textViewLabelTimeStartDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="17dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:text="Khởi hành: "
+            app:layout_constraintLeft_toRightOf="@+id/imageView2Detail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVehicleDetail" />
+
+        <TextView
+            android:id="@+id/textViewTimeStartDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:text="14:30 22-05-2017"
+            app:layout_constraintLeft_toRightOf="@+id/textViewLabelTimeStartDetail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPriceDetail" />
+
+        <TextView
+            android:id="@+id/textViewSeatDetail"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="10"
+            app:layout_constraintLeft_toRightOf="@+id/textViewTimeStartDetail"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPriceUnitDetail" />
+
+        <CheckBox
+            android:id="@+id/checkboxLuggageDetail"
+            android:layout_width="113dp"
+            android:layout_height="17dp"
+            android:text="Hành lý"
+            android:layout_marginTop="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTimeStartDetail"
+            app:layout_constraintLeft_toRightOf="@+id/textViewNameDetail"
+            android:layout_marginLeft="100dp" />
+
+        <TextView
+            android:id="@+id/textViewLabelSeatDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:text="Chỗ"
+            app:layout_constraintLeft_toRightOf="@+id/textViewSeatDetail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPriceUnitDetail" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
