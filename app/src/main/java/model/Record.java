@@ -12,12 +12,11 @@ public class Record implements Serializable {
 
     public String uid;
     public String name;
-    public String wayPoint;
+
     public String vehicle;
     public String date;
     public String time;
-    public int sit;
-    public Boolean luggage;
+
     public String price;
     public Latlng endLocation;
     public String origin;

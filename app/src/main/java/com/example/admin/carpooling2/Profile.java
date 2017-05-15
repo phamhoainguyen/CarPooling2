@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.text.format.DateFormat;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -48,6 +49,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import model.User;
 import utils.Const;
 import utils.GooglePlacesAutocompleteAdapter;
@@ -68,7 +70,6 @@ public class Profile extends Fragment implements View.OnClickListener {
     //control
     EditText editName;
     EditText editPhone;
-    EditText editEmail;
     EditText editAge;
     AutoCompleteTextView autoCompCity;
     Spinner spinnerGender;
@@ -87,14 +88,13 @@ public class Profile extends Fragment implements View.OnClickListener {
          imgProfile = (ImageView) view.findViewById(R.id.imgProfile);
         editName = (EditText) view.findViewById(R.id.editName);
         editPhone = (EditText) view.findViewById(R.id.editPhone);
-        editEmail =(EditText) view.findViewById(R.id.editEmail);
         editAge = (EditText) view.findViewById(R.id.editAge);
         autoCompCity = (AutoCompleteTextView) view.findViewById(R.id.autoCompCity);
         spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
-        //email không được edit
-        editEmail.setEnabled(false);
+        //Phone khong dc sua
+        editPhone.setEnabled(false);
         //set Click
         txtUpload.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
@@ -110,7 +110,6 @@ public class Profile extends Fragment implements View.OnClickListener {
         Log.e(TAG,"onCreateView 2");
         editName.setText(MainActivity.currentUser.name);
         editPhone.setText(MainActivity.currentUser.phone);
-        editEmail.setText(MainActivity.currentUser.email);
         spinnerGender.setSelection(MainActivity.currentUser.gender);
         if(MainActivity.currentUser.age != 0)
         {
@@ -124,8 +123,13 @@ public class Profile extends Fragment implements View.OnClickListener {
         if(MainActivity.currentUser.urlProfile != null)
         {
             Glide.with(getActivity()).load(MainActivity.currentUser.urlProfile)
-                    .override(150,150)
-                    .fitCenter()
+                    .bitmapTransform(new CropCircleTransformation(getActivity()))
+                    .into(imgProfile);
+        }
+        else
+        {
+            Glide.with(getActivity()).load(R.drawable.default_avatar)
+                    .bitmapTransform(new CropCircleTransformation(getActivity()))
                     .into(imgProfile);
         }
 
@@ -166,7 +170,7 @@ public class Profile extends Fragment implements View.OnClickListener {
 
             if(!Utils.isValidPhone(phone))
             {
-                Toast.makeText(getActivity(),"Số điện thoại di động không hợp lệ!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),getResources().getString(R.string.invalid_phone),Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -199,7 +203,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                     if(!task.isSuccessful())
                     {
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(),"Cập nhật không thành công!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),getResources().getString(R.string.unsuccess_update),Toast.LENGTH_LONG).show();
                         return;
                     }
                     else
@@ -212,7 +216,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                             public void onComplete(@NonNull Task<Void> task) {
                                 progressDialog.dismiss();
                                 if(task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), getResources().getString(R.string.success_update), Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -220,7 +224,7 @@ public class Profile extends Fragment implements View.OnClickListener {
 
                 }
             });
-            progressDialog = ProgressDialog.show(getActivity(),null,"Xin vui lòng đợi vì quá trình đang được xử lý...");
+            progressDialog = ProgressDialog.show(getActivity(),null,getResources().getString(R.string.wait));
 
 
         }
@@ -251,37 +255,30 @@ public class Profile extends Fragment implements View.OnClickListener {
                 uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                         @SuppressWarnings("VisibleForTests")
                         Uri url = taskSnapshot.getDownloadUrl();
                         Log.e(TAG,"onActivityResult downloadUrl" + url.toString());
                         //Cập nhât currentUser
                         MainActivity.currentUser.urlProfile = url.toString();
                         //Cập nhật database của user
-                        FirebaseDatabase.getInstance().getReference("users").child(MainActivity.currentUser.id).setValue(MainActivity.currentUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(!task.isSuccessful())
-                                {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getActivity(),"Cập nhật ảnh đại diện không thành công!",Toast.LENGTH_LONG).show();
-                                    return;
-                                }
-                                else
-                                {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(getActivity(),"Cập nhật ảnh đại diện thành công!",Toast.LENGTH_LONG).show();
-                                    Glide.with(getActivity()).load(MainActivity.currentUser.urlProfile)
-                                            .override(150,150)
-                                            .fitCenter()
-                                            .into(imgProfile);
-                                }
+                        FirebaseDatabase.getInstance().getReference("users").child(MainActivity.currentUser.id).setValue(MainActivity.currentUser);
+                        Glide.with(getActivity()).load(MainActivity.currentUser.urlProfile)
+                                .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                .into(imgProfile);
+                        // load hinh len navigate drawer
+                        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                       ImageView imgMain = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgProfile);
+                        Glide.with(getActivity()).load(MainActivity.currentUser.urlProfile)
+                                .bitmapTransform(new CropCircleTransformation(getActivity()))
+                                .into(imgMain);
 
-                            }
-                        });
+                        progressDialog.dismiss();
+
 
                     }
                 });
-                progressDialog = ProgressDialog.show(getActivity(),null,"Xin vui lòng đợi, quá trình đang được xử lý...");
+                progressDialog = ProgressDialog.show(getActivity(),null,getResources().getString(R.string.wait));
 
 
             }

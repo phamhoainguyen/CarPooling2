@@ -63,12 +63,14 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
         textViewNameDetail.setText(record.name);
         textViewVehicleDetail.setText(record.vehicle);
         textViewTimeStartDetail.setText(record.time +" " + record.date);
-        textViewSeatDetail.setText(String.valueOf(record.sit));
+        /*
+       textViewSeatDetail.setText(String.valueOf(record.sit));
         if(record.luggage) {
             checkboxLuggageDetail.setChecked(true);
         }
         else
             checkboxLuggageDetail.setChecked(false);
+            */
 
         return view;
     }
@@ -82,7 +84,7 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
 
         try {
             new DirectionFinder(this, record.origin, record.destination,
-                    record.wayPoint).execute();
+                    "").execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

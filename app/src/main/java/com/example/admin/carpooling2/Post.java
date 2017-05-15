@@ -63,8 +63,9 @@ public class Post extends Fragment implements DirectionFinderListener,View.OnCli
     private EditText editStartTime;
     private AutoCompleteTextView autoCompOrigin;
     private AutoCompleteTextView autoCompDes;
-    private AutoCompleteTextView autoCompWayPoint;
-    private NumberPicker numberPicker;
+    private  RadioButton radioMotobike;
+
+
     private  EditText editPrice;
 
 
@@ -260,55 +261,9 @@ public class Post extends Fragment implements DirectionFinderListener,View.OnCli
                     }
                 }
             });
-            //AutoComplete Way Point
-            autoCompWayPoint = (AutoCompleteTextView) view.findViewById(R.id.autoCompWayPoint);
-            autoCompWayPoint.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item,false));
-            autoCompWayPoint.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    isWayPointSuggestion = true;
-                    imm.toggleSoftInput(0, 0);
-
-
-                }
-            });
-            autoCompWayPoint.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    Log.e(TAG,"afterTextChanged");
-                    isWayPointSuggestion = false;
-
-                }
-            });
-            autoCompWayPoint.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    Log.e(TAG,"onFocusChanged");
-                    if(!hasFocus && !isWayPointSuggestion)
-                    {
-                        autoCompWayPoint.setText("");
-
-
-                    }
-                }
-            });
-
-            //number Picker
-            numberPicker = (NumberPicker) view.findViewById(R.id.numberPicker);
-            numberPicker.setMinValue(1);
-            numberPicker.setMaxValue(50);
+            //check radio xe hoi
+            radioMotobike = (RadioButton) view.findViewById(R.id.radioMotobike);
+            radioMotobike.setChecked(true);
             setClick(R.id.radioMotobike,view);
             setClick(R.id.radioCar,view);
             setClick(R.id.radioPassenger,view);
@@ -333,7 +288,7 @@ public class Post extends Fragment implements DirectionFinderListener,View.OnCli
         {
             String origin = autoCompOrigin.getText().toString();
             String destination = autoCompDes.getText().toString();
-            String wayPoint = autoCompWayPoint.getText().toString();
+
             int radioCheckedID = ((RadioGroup) getView().findViewById(R.id.radioVehiclegroup)).getCheckedRadioButtonId();
             String date = editStartDate.getText().toString();
             String time = editStartTime.getText().toString();
@@ -351,16 +306,13 @@ public class Post extends Fragment implements DirectionFinderListener,View.OnCli
 
             record.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             record.name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            record.wayPoint = wayPoint;
             record.vehicle = ((RadioButton) getView().findViewById(radioCheckedID)).getText().toString();
             record.date = date;
             record.time = time;
-            record.sit = numberPicker.getValue();
-            record.luggage = ((CheckBox) getView().findViewById(R.id.ckLuggage)).isChecked();
             record.price = price;
 
             try {
-                new DirectionFinder(this,origin,destination, record.wayPoint).execute();
+                new DirectionFinder(this,origin,destination,"").execute();
             }
             catch (UnsupportedEncodingException e)
             {
@@ -370,23 +322,7 @@ public class Post extends Fragment implements DirectionFinderListener,View.OnCli
 
 
         }
-        else if(v.getId() == R.id.radioMotobike)
-        {
-            numberPicker.setMinValue(1);
-            numberPicker.setMaxValue(1);
-        }
-        else if(v.getId() == R.id.radioCar)
-        {
-            numberPicker.setMinValue(1);
 
-            numberPicker.setMaxValue(7);
-        }
-        else if(v.getId() == R.id.radioPassenger)
-        {
-            numberPicker.setMinValue(1);
-
-            numberPicker.setMaxValue(50);
-        }
 
     }
 

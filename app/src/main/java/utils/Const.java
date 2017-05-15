@@ -15,5 +15,9 @@ public class Const {
     public static final  String STORAGE_REFERENCE_URL = "gs://stellar-chemist-164609.appspot.com";
     public static  final String FOLDER_IMAGE_PROFILE_PICTURE= "profile_picture";
 
+    public  static  final String  VERIFY_REQUEST_URL = "http://uploadviet.mobi/CarPooling/verify.php?" ;
+    public  static  final String  VERIFY_CHECK_URL = "http://uploadviet.mobi/CarPooling/comfirm.php?" ;
+
+
 
 }

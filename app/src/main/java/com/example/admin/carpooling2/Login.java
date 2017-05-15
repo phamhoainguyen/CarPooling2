@@ -34,39 +34,42 @@ public class Login extends AppCompatActivity {
     //control
     private TextView txtAccount;
     private Button btnLogin;
-    private EditText edtEmail;
-    private EditText edtPass;
+    private EditText editPhone;
+    private EditText editPass;
     private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         txtAccount = (TextView) findViewById(R.id.txtAccount);
-        edtEmail =(EditText) findViewById(R.id.edtEmail);
-        edtPass =(EditText) findViewById(R.id.edtPass);
+        editPhone =(EditText) findViewById(R.id.editPhone);
+        editPass =(EditText) findViewById(R.id.editPass);
         txtAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Login.this,Register.class);
                 startActivity(intent);
+
             }
         });
         btnLogin =(Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = edtEmail.getText().toString();
-                String pass = edtPass.getText().toString();
-                if(email.length() == 0 || pass.length() == 0)
+                String phone = editPhone.getText().toString();
+                String pass = editPass.getText().toString();
+                if(phone.length() == 0 || pass.length() == 0)
                 {
-                    Toast.makeText(Login.this,"Xin vui lòng điền đầy đủ thông tin!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this,getResources().getString(R.string.blank_field),Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(!Utils.isValidEmail(email))
+                if(!Utils.isValidPhone(phone))
                 {
-                    Toast.makeText(Login.this,"Email không hợp lệ!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this,getResources().getString(R.string.invalid_phone),Toast.LENGTH_LONG).show();
                     return;
                 }
+                String email = phone + "@domain.com";
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email,pass).addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -74,7 +77,7 @@ public class Login extends AppCompatActivity {
                         if(!task.isSuccessful())
                         {
                             progressDialog.dismiss();
-                            Toast.makeText(Login.this,"Đăng nhập thất bại",Toast.LENGTH_LONG).show();
+                            Toast.makeText(Login.this,getResources().getString(R.string.unsuccess_login),Toast.LENGTH_LONG).show();
 
                         }
                         else
@@ -90,11 +93,10 @@ public class Login extends AppCompatActivity {
                                     User user = iterator.next().getValue(User.class);
                                     Log.e(TAG,"onCreate ondataCHange2 user=" + user.toString());
                                     MainActivity.currentUser = user;
-                                    Record record = new Record();
                                     Intent intent = new Intent(Login.this, MainActivity.class);
-
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
-                                    finish();
+
                                 }
 
                                 @Override
@@ -110,7 +112,7 @@ public class Login extends AppCompatActivity {
 
                     }
                 });
-                progressDialog = ProgressDialog.show(Login.this,null,"Xin vui lòng đợi, quá trình đang được xử lý...");
+                progressDialog = ProgressDialog.show(Login.this,null,getResources().getString(R.string.wait));
 
             }
         });

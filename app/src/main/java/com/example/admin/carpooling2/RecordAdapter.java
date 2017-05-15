@@ -52,7 +52,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         holder.txtName.setText(record.name);
         holder.txtVehicle.setText(record.vehicle);
         holder.txtPrice.setText(record.price);
-        holder.txtSit.setText(String.valueOf(record.sit));
+       //holder.txtSit.setText(String.valueOf(record.sit));
         holder.txtTimeStart.setText(record.time + " " + record.date);
     }
 

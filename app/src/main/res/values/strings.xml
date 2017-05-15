@@ -7,7 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="create_an_account"><u>Tạo tài khoản</u></string>
     <string name="my_profile">Hồ sơ cá nhân</string>
-    <string name="search_trip">Tìm kiếm</string>
+    <string name="search_trip" translatable="false">Tìm kiếm</string>
     <string name="post_trip">Đăng chuyến đi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -44,6 +44,22 @@
     <string name="register">Đăng kí</string>
     <string name="login">Đăng nhập</string>
     <string name="find">Tìm kiếm</string>
+    <string name="verification_instruction">Nhập vào mã code nằm trong tin nhắn mà chúng tôi vừa gửi cho số điện thoại bạn đăng kí</string>
+    <string name="verify">Xác thực</string>
+    <string name="success_send_sms">Tín nhắn xác thực đã được gửi</string>
+    <string name="wait">Xin vui lòng đợi trong giây lát...</string>
+    <string name="already_sent">Tin nhắn xác thực đẵ được gửi trước đó, xin vui lòng kiểm tra lại</string>
+    <string name="blank_field">Xin vui lòng điền đầy đủ thông tin!</string>
+    <string name="wrong_pịn">Mã kích hoạt không đúng, vui lòng sữ dụng mã kích hoạt nằm trong tin nhắn SMS hoặc cuộc gọi vừa nhận được</string>
+    <string name="terminate_pin">Mã kích hoạt đã bị hủy, vui lòng đăng ký lại để nhận được mã kích hoạt mới</string>
+    <string name="non_exist_pin">Mã kích hoạt cho số điện thoại này không còn tồn tại, vui lòng đăng kí lại để nhận được mã kích hoạt mới</string>
+    <string name="invalid_phone">Số điện thoại di động không hợp lệ!</string>
+    <string name="invalid_pass">Mật khẩu cần ít nhất 6 kí tự!</string>
+    <string name="invalid_confirm_pass">Xác nhận mật khẩu không khớp!</string>
+    <string name="unsuccess_create_account">Đăng kí không thành công!</string>
+    <string name="unsuccess_login">Đăng nhập không thành công!</string>
+    <string name="unsuccess_update">Cập nhật không thành công!</string>
+    <string name="success_update">Cập nhật thành công!</string>
 
 
 </resources>

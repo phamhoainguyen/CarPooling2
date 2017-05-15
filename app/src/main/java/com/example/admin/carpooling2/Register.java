@@ -25,7 +25,7 @@ import utils.Utils;
 public class Register extends AppCompatActivity {
     final private String TAG="Register";
     private EditText edtName;
-    private EditText edtEmail;
+
     private EditText edtPass;
     private EditText edtConfirmPass;
     private  EditText editPhone;
@@ -39,7 +39,6 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.register);
         editPhone = (EditText) findViewById(R.id.editPhone);
         edtName = (EditText) findViewById(R.id.edtName);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtPass = (EditText) findViewById(R.id.edtPass);
         edtConfirmPass = (EditText) findViewById(R.id.edtConfirmPass);
         btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -48,82 +47,44 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                final String name = edtName.getText().toString();
                 String pass = edtPass.getText().toString();
-                final String email = edtEmail.getText().toString();
+
                 String confirmPass = edtConfirmPass.getText().toString();
                 final String phone = editPhone.getText().toString();
 
-                if(name.length() == 0 || pass.length() == 0 || email.length() == 0 || confirmPass.length() ==0 || phone.length() == 0)
+                if(name.length() == 0 || pass.length() == 0 || confirmPass.length() ==0 || phone.length() == 0)
                 {
-                    Toast.makeText(Register.this,"Xin vui lòng điền đầy đủ thông tin!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,getResources().getString(R.string.blank_field),Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(!Utils.isValidEmail(email))
-                {
-                    Toast.makeText(Register.this,"Email không hợp lệ!",Toast.LENGTH_LONG).show();
-                    return;
-                }
+
                 if(!Utils.isValidPhone(phone))
                 {
-                    Toast.makeText(Register.this,"Số điện thoại di động không hợp lệ!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,getResources().getString(R.string.invalid_phone),Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if(pass.length() < 6)
                 {
-                    Toast.makeText(Register.this,"Mật khẩu cần ít nhất 6 kí tự!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,getResources().getString(R.string.invalid_pass),Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(!confirmPass.equals(pass))
                 {
-                    Toast.makeText(Register.this,"Xác nhận mật khẩu không khớp!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,getResources().getString(R.string.invalid_confirm_pass),Toast.LENGTH_LONG).show();
                     return;
                 }
 
-
-
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,pass).addOnCompleteListener(Register.this,new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        Log.e(TAG,"create User onComplete");
-                        if(!task.isSuccessful())
-                        {
-
-                            Toast.makeText(Register.this,"Tài khoản đã tồn tại!",Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        else
-                        {
-                          final FirebaseUser user = task.getResult().getUser();
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(name)
-                                    .build();
-                            user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Log.e(TAG,"update profile onComplete");
-                                    if(task.isSuccessful())
-                                    {
-                                        Intent intent = new Intent(Register.this,MainActivity.class);
-                                        User newUser = new User(user.getUid(),name,phone,email);
-                                        FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).setValue(newUser);
-                                        MainActivity.currentUser = newUser;
-                                        startActivity(intent);
-                                        finish();
-                                    }
-
-                                }
-                            });
-
-
-                        }
-
-                    }
-                });
+                Intent intent = new Intent(Register.this,PhoneVerification.class);
+                intent.putExtra("name",name);
+                intent.putExtra("phone",phone);
+                intent.putExtra("password",pass);
+                startActivity(intent);
 
 
 
-                progressDialog = ProgressDialog.show(Register.this,null,"Please wait...");
+
+
+
 
             }
         });
