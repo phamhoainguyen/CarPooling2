@@ -73,8 +73,9 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
                         //--------------------------------- Code xử lý để lọc kết quả tại đây------------------------
                         //-------------------------------------- sử dụng searchCondition -----------------------------
                         //-------------------------------------------------------------------------------------------
-                        // cùng loại phương tiện
-                        if (SortRecords.compareVehicle(temp, Result.this.searchCondition) == true && SortRecords.compareTime(temp, searchCondition)) {
+                        // kiểm ta tất cả các điều kiện có thỏa không
+                        // 20 là bán kính tìm trong vòng 20km
+                        if (SortRecords.checkAllConditions(temp, Result.this.searchCondition, 20)){
                             list.add(temp);
                         }
                     }

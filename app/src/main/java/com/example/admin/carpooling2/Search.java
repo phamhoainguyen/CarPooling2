@@ -24,6 +24,8 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
@@ -249,7 +251,7 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
             searchCondition = new Record();
             searchCondition.origin = autoCompOriginSearch.getText().toString();
             searchCondition.destination = autoCompDesSearch.getText().toString();
-
+            searchCondition.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             searchCondition.vehicle = ((RadioButton) getView().findViewById(radioCheckedID)).getText().toString();
             searchCondition.date = editStartDateSearch.getText().toString();
             searchCondition.time = editStartTimeSearch.getText().toString();

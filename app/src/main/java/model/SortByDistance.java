@@ -39,20 +39,20 @@ public class SortByDistance {
     }
 
 
-
-
     // Hàm này tính khoảng tổng chênh lệch giữa 2 điểm xuất phát và 2 điểm kết thúc
     public double calDistance(Record record, Record searchCondition){
 
-        double dStartX = record.startLocation.longitude - searchCondition.startLocation.longitude;
-        double dStartY = record.startLocation.latitude - searchCondition.startLocation.latitude;
-        double distanceBetweenTwoStartLocations = Math.sqrt( ( dStartX * dStartX ) + ( dStartY * dStartY ) );
+//        double dStartX = record.startLocation.longitude - searchCondition.startLocation.longitude;
+//        double dStartY = record.startLocation.latitude - searchCondition.startLocation.latitude;
+//        double distanceBetweenTwoStartLocations = Math.sqrt( ( dStartX * dStartX ) + ( dStartY * dStartY ) );
+//
+//
+//        double dEndX = record.endLocation.longitude - searchCondition.endLocation.longitude;
+//        double dEndY = record.endLocation.latitude - searchCondition.endLocation.latitude;
+//        double distanceBetweenTwoEndLocations = Math.sqrt( ( dEndX * dEndX ) + ( dEndY * dEndY ) );
 
-
-        double dEndX = record.endLocation.longitude - searchCondition.endLocation.longitude;
-        double dEndY = record.endLocation.latitude - searchCondition.endLocation.latitude;
-        double distanceBetweenTwoEndLocations = Math.sqrt( ( dEndX * dEndX ) + ( dEndY * dEndY ) );
-
-        return  Math.abs(distanceBetweenTwoEndLocations - distanceBetweenTwoStartLocations);
+        // tính tổng chênh lệch để sắp xếp record
+        return  SortRecords.calDistance(record.startLocation, searchCondition.startLocation)
+                + SortRecords.calDistance(record.endLocation, searchCondition.endLocation);
     }
 }
