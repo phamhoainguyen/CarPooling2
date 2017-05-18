@@ -59,6 +59,7 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
     private Button btnLocation;
 
+    private GPSService gpsService;
     private EditText editStartDate;
     private EditText editStartTime;
     private AutoCompleteTextView autoCompOrigin;
@@ -85,9 +86,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.post, container, false);
 
-
         // Button btnLocation
         btnLocation = (Button) view.findViewById(R.id.btnLocation);
+        gpsService = new GPSService(getActivity());
 
 
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -169,6 +170,7 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
             }
         });
+
 
         //AutoComplete Origin
         autoCompOrigin = (AutoCompleteTextView) view.findViewById(R.id.autoCompOrigin);
@@ -263,16 +265,18 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
         setClick(R.id.radioCar, view);
         setClick(R.id.radioPassenger, view);
 
-
-        ///////////////////////////////////////////////////////////
-        btnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-        }});
+        setClick(R.id.btnLocation, view);
 
 
+        // kiểm tra google play services
+        if (gpsService.checkPlayServices()) {
 
+            // Building the GoogleApi client
+            gpsService.buildGoogleApiClient();
+            gpsService.mGoogleApiClient.connect();
+        }
+
+        GPSRequirement.checkGPSStatus(getActivity());
 
         return view;
     }
@@ -320,6 +324,14 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
             }
         }
+        if(v.getId() == R.id.btnLocation){
+//            Toast.makeText(getActivity(),
+//                    "Nhan dc su kien.", Toast.LENGTH_LONG).show();
+            gpsService.getDeviceLocation();
+            gpsService.getmLastLocation();
+            Toast.makeText(getActivity(),
+                    gpsService.getmLastLocation().getLatitude() + ", " +  gpsService.getmLastLocation().getLongitude(), Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -364,15 +376,26 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
         }
     }
 
+
+
     @Override
-    public void onStart(){
+    public void onResume() {
+        super.onResume();
+        gpsService.checkPlayServices();
+    }
+    @Override
+    public void onStart() {
         super.onStart();
-
+        if (gpsService.mGoogleApiClient != null) {
+            gpsService.mGoogleApiClient.connect();
+        }
     }
-
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
-
+        if (gpsService.mGoogleApiClient != null) {
+            gpsService.mGoogleApiClient.disconnect();
+        }
     }
+
 }
