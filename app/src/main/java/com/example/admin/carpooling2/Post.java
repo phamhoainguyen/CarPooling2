@@ -18,17 +18,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,7 +59,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
     //Tag
     private static final String TAG = "Post";
     //request
-    private final int SAVE_RECORD_REQUEST = 1;
+    private final  int PLACE_AUTOCOMPLETE_DES = 0;
+    private final  int PLACE_AUTOCOMPLETE_ORIGIN = 1;
+    private final int SAVE_RECORD_REQUEST = 2;
 
 
     //control
@@ -62,8 +71,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
     private GPSService gpsService;
     private EditText editStartDate;
     private EditText editStartTime;
-    private AutoCompleteTextView autoCompOrigin;
-    private AutoCompleteTextView autoCompDes;
+    private EditText editOrigin;
+    private EditText editDestination;
+
     private RadioButton radioMotobike;
 
     LastKnownLocation lastKnownLocation;
@@ -85,6 +95,12 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.post, container, false);
+        //clear focus cho tat ca View
+        /*
+       LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout_post);
+        layout.requestFocus();
+        */
+
 
         // Button btnLocation
         btnLocation = (Button) view.findViewById(R.id.btnLocation);
@@ -96,15 +112,17 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
         editPrice = (EditText) view.findViewById(R.id.editPrice);
         editStartDate = (EditText) view.findViewById(R.id.editStartDate);
         editStartDate.setInputType(InputType.TYPE_NULL);
+        final Calendar c = Calendar.getInstance();
+        final int mYear = c.get(Calendar.YEAR);
+        final int mMonth = c.get(Calendar.MONTH);
+        final int mDay = c.get(Calendar.DAY_OF_MONTH);
+        editStartDate.setText(mDay + "-" + (mMonth + 1) + "-" + mYear);
         editStartDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
 
-                    final Calendar c = Calendar.getInstance();
-                    int mYear = c.get(Calendar.YEAR);
-                    int mMonth = c.get(Calendar.MONTH);
-                    int mDay = c.get(Calendar.DAY_OF_MONTH);
+
 
 
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
@@ -127,6 +145,8 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
                             editStartDate.clearFocus();
                         }
                     });
+                    //set min day
+                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
             }
@@ -173,91 +193,47 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
 
         //AutoComplete Origin
-        autoCompOrigin = (AutoCompleteTextView) view.findViewById(R.id.autoCompOrigin);
-
-        autoCompOrigin.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item, false));
-        autoCompOrigin.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(TAG, "onItemClick");
-
-                isOriginSuggestion = true;
-                imm.toggleSoftInput(0, 0);
-
-
-            }
-        });
-        autoCompOrigin.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.e(TAG, "afterTextChanged");
-                isOriginSuggestion = false;
-            }
-        });
-        autoCompOrigin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editOrigin = (EditText) view.findViewById(R.id.editOrigin);
+        editOrigin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Log.e(TAG, "onFocusChanged");
-                if (!hasFocus && !isOriginSuggestion) {
-                    autoCompOrigin.setText("");
-
+                if(hasFocus)
+                {
+                    AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("vn").build();
+                    try {
+                        Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(filter).build(getActivity());
+                        startActivityForResult(intent,PLACE_AUTOCOMPLETE_ORIGIN);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        e.printStackTrace();
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
         });
-
+         
         //----------------------------------AutoComplete Des------------------------------
-        autoCompDes = (AutoCompleteTextView) view.findViewById(R.id.autoCompDes);
-        autoCompDes.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item, false));
-        autoCompDes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                isDesSuggestion = true;
-                imm.toggleSoftInput(0, 0);
-
-
-            }
-        });
-        autoCompDes.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.e(TAG, "afterTextChanged");
-                isDesSuggestion = false;
-
-            }
-        });
-        autoCompDes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editDestination = (EditText) view.findViewById(R.id.editDestination);
+        editDestination.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Log.e(TAG, "onFocusChanged");
-                if (!hasFocus && !isDesSuggestion) {
-                    autoCompDes.setText("");
-
+                if(hasFocus)
+                {
+                    AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("vn").build();
+                    try {
+                       Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(filter).build(getActivity());
+                        startActivityForResult(intent,PLACE_AUTOCOMPLETE_DES);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        e.printStackTrace();
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
         });
+
         //check radio xe hoi
         radioMotobike = (RadioButton) view.findViewById(R.id.radioMotobike);
         radioMotobike.setChecked(true);
@@ -294,8 +270,8 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnPost) {
-            String origin = autoCompOrigin.getText().toString();
-            String destination = autoCompDes.getText().toString();
+            String origin =  editOrigin.getText().toString();
+            String destination = editDestination.getText().toString();
 
             int radioCheckedID = ((RadioGroup) getView().findViewById(R.id.radioVehiclegroup)).getCheckedRadioButtonId();
             String date = editStartDate.getText().toString();
@@ -373,6 +349,26 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
             } else if (requestCode == Activity.RESULT_CANCELED) {
 
             }
+        }
+        else if(requestCode == PLACE_AUTOCOMPLETE_DES)
+        {
+             editDestination.clearFocus();
+            if(resultCode == Activity.RESULT_OK)
+            {
+               Place place = PlaceAutocomplete.getPlace(getActivity(),data);
+                editDestination.setText(place.getAddress());
+            }
+
+        }
+        else if(requestCode == PLACE_AUTOCOMPLETE_ORIGIN)
+        {
+            editOrigin.clearFocus();
+            if(resultCode == Activity.RESULT_OK)
+            {
+                Place place = PlaceAutocomplete.getPlace(getActivity(),data);
+                editOrigin.setText(place.getAddress());
+            }
+
         }
     }
 

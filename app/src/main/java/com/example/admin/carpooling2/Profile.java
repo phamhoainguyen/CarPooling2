@@ -27,6 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -66,12 +71,14 @@ public class Profile extends Fragment implements View.OnClickListener {
     //tag
     private final String TAG = "Profile";
     //request
+    private final  int PLACE_AUTOCOMPLETE_CITY = 0;
     private static final int IMAGE_GALLERY_REQUEST = 1;
     //control
     EditText editName;
     EditText editPhone;
     EditText editAge;
-    AutoCompleteTextView autoCompCity;
+    EditText editCity;
+
     Spinner spinnerGender;
     Button btnUpdate;
     TextView txtUpload;
@@ -89,7 +96,7 @@ public class Profile extends Fragment implements View.OnClickListener {
         editName = (EditText) view.findViewById(R.id.editName);
         editPhone = (EditText) view.findViewById(R.id.editPhone);
         editAge = (EditText) view.findViewById(R.id.editAge);
-        autoCompCity = (AutoCompleteTextView) view.findViewById(R.id.autoCompCity);
+        editCity = (EditText) view.findViewById(R.id.editCity);
         spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
         txtUpload = (TextView) view.findViewById(R.id.txtUpload);
@@ -117,7 +124,7 @@ public class Profile extends Fragment implements View.OnClickListener {
         }
         if(MainActivity.currentUser.city != null)
         {
-            autoCompCity.setText(MainActivity.currentUser.city);
+            editCity.setText(MainActivity.currentUser.city);
         }
 
         if(MainActivity.currentUser.urlProfile != null)
@@ -135,8 +142,24 @@ public class Profile extends Fragment implements View.OnClickListener {
 
 
         //autocomplete của city
-        autoCompCity.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(),R.layout.list_item,true));
+        editCity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("vn").setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES).build();
+                    try {
+                        Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(filter).build(getActivity());
+                        startActivityForResult(intent,PLACE_AUTOCOMPLETE_CITY);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        e.printStackTrace();
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
 
+                }
+            }
+        });
 
 
         return view;
@@ -187,7 +210,7 @@ public class Profile extends Fragment implements View.OnClickListener {
             {
                 MainActivity.currentUser.age = 0;
             }
-            String city = autoCompCity.getText().toString();
+            String city = editCity.getText().toString();
             if(!city.isEmpty())
             {
                 MainActivity.currentUser.city = city;
@@ -238,11 +261,11 @@ public class Profile extends Fragment implements View.OnClickListener {
         if (requestCode == IMAGE_GALLERY_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.e(TAG, "onActivityResult GALLERY_REQUEST:" + data.getData().toString());
-               Uri selectedImageUri = data.getData();
+                Uri selectedImageUri = data.getData();
                 Log.e(TAG,"onActivityResult selectedUri=" + selectedImageUri.toString());
                 //Dẫn đến storage thư mục images của firebase
                 final String date = format("yyyy-MM-dd_hhmmss_", new Date()).toString();
-               StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(Const.STORAGE_REFERENCE_URL).child(Const.FOLDER_IMAGE_PROFILE_PICTURE).child(date + MainActivity.currentUser.id);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(Const.STORAGE_REFERENCE_URL).child(Const.FOLDER_IMAGE_PROFILE_PICTURE).child(date + MainActivity.currentUser.id);
                 //Up lên storage
                 UploadTask uploadTask = storageReference.putFile(selectedImageUri);
                 uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -268,7 +291,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                                 .into(imgProfile);
                         // load hinh len navigate drawer
                         NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                       ImageView imgMain = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgProfile);
+                        ImageView imgMain = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgProfile);
                         Glide.with(getActivity()).load(MainActivity.currentUser.urlProfile)
                                 .bitmapTransform(new CropCircleTransformation(getActivity()))
                                 .into(imgMain);
@@ -283,6 +306,17 @@ public class Profile extends Fragment implements View.OnClickListener {
 
             }
         }
+        else  if (requestCode == PLACE_AUTOCOMPLETE_CITY)
+        {
+            editCity.clearFocus();
+            if(resultCode == Activity.RESULT_OK)
+            {
+                Place place = PlaceAutocomplete.getPlace(getActivity(),data);
+                editCity.setText(place.getName());
+            }
+
+        }
+
     }
 
 }

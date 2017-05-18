@@ -1,27 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_post"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.admin.carpooling2.Post">
+    tools:context="com.example.admin.carpooling2.Post"
+    android:focusableInTouchMode="true"
+    >
 
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompOrigin"
+    <EditText
+        android:id="@+id/editOrigin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
         android:hint="@string/orgin"
-        android:imeOptions="actionNext"
-        />
+        android:inputType="textPersonName" />
 
-    <AutoCompleteTextView
-        android:id="@+id/autoCompDes"
+    <EditText
+        android:id="@+id/editDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
         android:hint="@string/destination"
-        android:textSize="18sp"
-        android:imeOptions="actionNext"
-        />
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textView4"

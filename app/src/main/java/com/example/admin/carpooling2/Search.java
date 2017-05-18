@@ -1,11 +1,13 @@
 package com.example.admin.carpooling2;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -24,6 +26,11 @@ import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.UnsupportedEncodingException;
@@ -42,10 +49,13 @@ import utils.GooglePlacesAutocompleteAdapter;
 public class Search extends Fragment implements View.OnClickListener, DirectionFinderListener{
 
     private static final String TAG ="Search";
+    private final  int PLACE_AUTOCOMPLETE_DES = 0;
+    private final  int PLACE_AUTOCOMPLETE_ORIGIN = 1;
     private EditText editStartDateSearch;
     private EditText editStartTimeSearch;
-    private AutoCompleteTextView autoCompOriginSearch;
-    private AutoCompleteTextView autoCompDesSearch;
+    private EditText editOrigin;
+    private EditText editDestination;
+    private RadioButton radioMotobikeSearch;
     Record searchCondition = new Record();
 
     boolean isOriginSuggestion = false;
@@ -60,17 +70,22 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setClick(R.id.btnFind, view);
 
+        //check motobike
+        radioMotobikeSearch = (RadioButton) view.findViewById(R.id.radioMotobikeSearch);
+        radioMotobikeSearch.setChecked(true);
 //        // Lấy ngày khởi hành chạm vào edit text show lên lịch
         editStartDateSearch = (EditText) view.findViewById(R.id.editStartDateSearch);
+        final Calendar c = Calendar.getInstance();
+        final int mYear = c.get(Calendar.YEAR);
+        final int mMonth = c.get(Calendar.MONTH);
+        final int mDay = c.get(Calendar.DAY_OF_MONTH);
+        editStartDateSearch.setText(mDay + "-" + (mMonth + 1) + "-" + mYear);
         editStartDateSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus)
                 {
-                    final Calendar c = Calendar.getInstance();
-                    int mYear = c.get(Calendar.YEAR);
-                    int mMonth = c.get(Calendar.MONTH);
-                    int mDay = c.get(Calendar.DAY_OF_MONTH);
+
 
 
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
@@ -91,6 +106,7 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
                             editStartDateSearch.clearFocus();
                         }
                     });
+                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
                     datePickerDialog.show();
                 }
             }
@@ -129,77 +145,51 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
 
 
               //--------------------------------Auto Complete Origin Search-------------------------------------
-        autoCompOriginSearch = (AutoCompleteTextView) view.findViewById(R.id.autoCompOriginSearch);
-        autoCompOriginSearch.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item, false));
-        autoCompOriginSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        editOrigin = (EditText) view.findViewById(R.id.editOrigin);
+        editOrigin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(TAG,"onItemClick");
-                isOriginSuggestion = true;
-                imm.toggleSoftInput(0, 0);
-            }
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("vn").build();
+                    try {
+                        Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(filter).build(getActivity());
+                        startActivityForResult(intent,PLACE_AUTOCOMPLETE_ORIGIN);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        e.printStackTrace();
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
 
-        });
-
-        //autoCompOriginSearch có member là interface
-        // Sử dụng interface để nhận sự kiện thay đổi text
-        autoCompOriginSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-            // sau khi thay doi xong edit text thì set isOriginSuggestion = false
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.e(TAG,"afterTextChanged");
-                isOriginSuggestion = false;
+                }
             }
         });
+
+
         //----------------------------------------------------------------------------------------
 //
 //
         //--------------------------------Auto Complete Destination Search-------------------------------------
-        autoCompDesSearch = (AutoCompleteTextView) view.findViewById(R.id.autoCompDesSearch);
-        autoCompDesSearch.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.list_item, false));
-        autoCompDesSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        editDestination = (EditText) view.findViewById(R.id.editDestination);
+        editDestination.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e(TAG,"onItemClick");
-                isDesSuggestion = true;
-            }
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    AutocompleteFilter filter = new AutocompleteFilter.Builder().setCountry("vn").build();
+                    try {
+                        Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).setFilter(filter).build(getActivity());
+                        startActivityForResult(intent,PLACE_AUTOCOMPLETE_DES);
+                    } catch (GooglePlayServicesRepairableException e) {
+                        e.printStackTrace();
+                    } catch (GooglePlayServicesNotAvailableException e) {
+                        e.printStackTrace();
+                    }
 
-        });
-
-        //autoCompOriginSearch có member là interface
-        // Sử dụng interface để nhận sự kiện thay đổi text
-        autoCompDesSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-            // sau khi thay doi song edit text thì set isOriginSuggestion = false
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.e(TAG,"afterTextChanged");
-                isDesSuggestion = false;
+                }
             }
         });
+
 //        //----------------------------------------------------------------------------------------
 //
 //
@@ -231,8 +221,8 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
         if(view.getId() == R.id.btnFind) {
 
             // lay địa điểm
-            String origin = autoCompOriginSearch.getText().toString();
-            String destination = autoCompDesSearch.getText().toString();
+            String origin = editOrigin.getText().toString();
+            String destination = editDestination.getText().toString();
 
             // Lấy loại phương tiện
             int radioCheckedID = ((RadioGroup) getView().findViewById(R.id.radioVehiclegroupSearch)).getCheckedRadioButtonId();
@@ -249,8 +239,8 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
 
             // Tạo đối tượng record và gán các giá trị của nó.
             searchCondition = new Record();
-            searchCondition.origin = autoCompOriginSearch.getText().toString();
-            searchCondition.destination = autoCompDesSearch.getText().toString();
+            searchCondition.origin = origin;
+            searchCondition.destination = destination;
             searchCondition.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             searchCondition.vehicle = ((RadioButton) getView().findViewById(radioCheckedID)).getText().toString();
             searchCondition.date = editStartDateSearch.getText().toString();
@@ -280,5 +270,30 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragmentContainer,new Result(searchCondition)).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PLACE_AUTOCOMPLETE_DES)
+        {
+            editDestination.clearFocus();
+            if(resultCode == Activity.RESULT_OK)
+            {
+                Place place = PlaceAutocomplete.getPlace(getActivity(),data);
+                editDestination.setText(place.getAddress());
+            }
+
+        }
+        else if(requestCode == PLACE_AUTOCOMPLETE_ORIGIN)
+        {
+            editOrigin.clearFocus();
+            if(resultCode == Activity.RESULT_OK)
+            {
+                Place place = PlaceAutocomplete.getPlace(getActivity(),data);
+                editOrigin.setText(place.getAddress());
+            }
+
+        }
     }
 }
