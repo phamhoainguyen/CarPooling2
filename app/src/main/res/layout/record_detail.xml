@@ -155,4 +155,10 @@
 
     </android.support.constraint.ConstraintLayout>
 
+    <Button
+        android:id="@+id/buttonCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gọi điện" />
+
 </LinearLayout>

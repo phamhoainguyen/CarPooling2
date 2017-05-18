@@ -1,20 +1,7 @@
 package utils;
 
 
-import android.util.Log;
 import android.util.Patterns;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 
 
 /**
@@ -31,6 +18,8 @@ public class Utils {
         return phone.matches("^09[0-9]{8}|01[0-9]{9}$");
 
     }
+
+
 
 
 }
