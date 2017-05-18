@@ -11,9 +11,18 @@
 
             android:title="@string/post_trip" />
         <item
-            android:id="@+id/nav_profile"
+        android:id="@+id/nav_profile"
 
-            android:title="@string/my_profile" />
+        android:title="@string/my_profile" />
+        <item
+            android:id="@+id/nav_history"
+
+            android:title="@string/history" />
+        <item
+            android:id="@+id/nav_log_out"
+
+            android:title="@string/log_out" />
+
 
 
 

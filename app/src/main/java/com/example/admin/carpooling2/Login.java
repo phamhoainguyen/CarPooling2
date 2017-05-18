@@ -2,6 +2,7 @@ package com.example.admin.carpooling2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +41,12 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.login);
+
+
+
         txtAccount = (TextView) findViewById(R.id.txtAccount);
         editPhone =(EditText) findViewById(R.id.editPhone);
         editPass =(EditText) findViewById(R.id.editPass);
@@ -82,8 +88,9 @@ public class Login extends AppCompatActivity {
                         }
                         else
                         {
+                            Log.e(TAG,"onCreate currentUid=" + task.getResult().getUser().getUid());
 
-                            Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByKey().equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByKey().equalTo(task.getResult().getUser().getUid());
                             query.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,8 +100,13 @@ public class Login extends AppCompatActivity {
                                     User user = iterator.next().getValue(User.class);
                                     Log.e(TAG,"onCreate ondataCHange2 user=" + user.toString());
                                     MainActivity.currentUser = user;
+                                    SharedPreferences cache = getSharedPreferences("cache",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = cache.edit();
+                                    editor.putString("id",user.id);
+                                    editor.commit();
                                     Intent intent = new Intent(Login.this, MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                    finish();
                                     startActivity(intent);
 
                                 }
@@ -104,6 +116,8 @@ public class Login extends AppCompatActivity {
 
                                 }
                             });
+
+
 
 
 
@@ -122,6 +136,10 @@ public class Login extends AppCompatActivity {
 
 
 
+
     }
+
+
+
 
 }

@@ -112,6 +112,7 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
         return  view;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();

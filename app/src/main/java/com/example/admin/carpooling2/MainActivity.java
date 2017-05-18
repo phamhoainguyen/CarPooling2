@@ -4,6 +4,7 @@ package com.example.admin.carpooling2;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import model.User;
@@ -75,12 +77,28 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+       int count = fragmentManager.getBackStackEntryCount();
+        Log.e(TAG,"onBackPress1 count=" + String.valueOf(count));
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            Log.e(TAG,"drawOpen");
         } else {
-            super.onBackPressed();
+            Log.e(TAG,"drawClose");
+            if(count == 0)
+            {
+                   moveTaskToBack(true);
+            }
+            else
+            {
+                //super.onBackPressed();
+                fragmentManager.popBackStack();
+
+            }
+
+
         }
+
     }
 
     @Override
@@ -126,6 +144,21 @@ public class MainActivity extends AppCompatActivity
         // chuyển sang fragment Profile
         else if (id == R.id.nav_profile) {
             fragmentManager.beginTransaction().replace(R.id.fragmentContainer,new Profile()).addToBackStack(null).commit();
+
+        }
+        else  if(id == R.id.nav_history)
+        {
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer,new History()).addToBackStack(null).commit();
+
+        }
+        else if (id == R.id.nav_log_out)
+        {
+            MainActivity.currentUser = null;
+            FirebaseAuth.getInstance().signOut();
+            getSharedPreferences("cache",MODE_PRIVATE).edit().clear().commit();
+            Intent intent = new Intent(MainActivity.this,Login.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
         }
 

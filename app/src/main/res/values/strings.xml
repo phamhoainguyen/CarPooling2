@@ -9,6 +9,8 @@
     <string name="my_profile">Hồ sơ cá nhân</string>
     <string name="search_trip" translatable="false">Tìm kiếm</string>
     <string name="post_trip">Đăng chuyến đi</string>
+    <string name="log_out">Thoát</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="date_start">Ngày khởi hành</string>
@@ -56,10 +58,14 @@
     <string name="invalid_phone">Số điện thoại di động không hợp lệ!</string>
     <string name="invalid_pass">Mật khẩu cần ít nhất 6 kí tự!</string>
     <string name="invalid_confirm_pass">Xác nhận mật khẩu không khớp!</string>
-    <string name="unsuccess_create_account">Đăng kí không thành công!</string>
+    <string name="unsuccess_create_account">Đăng kí tài khoản không thành công!</string>
+
     <string name="unsuccess_login">Đăng nhập không thành công!</string>
     <string name="unsuccess_update">Cập nhật không thành công!</string>
     <string name="success_update">Cập nhật thành công!</string>
+    <string name="already_have_phone">Số điện thoại này đã được đăng kí trước đó, vui lòng nhập số điện thoại mới</string>
+    <string name="history">Nhật ký hoạt động</string>
+    <string name="already_register">Số điện thoại bạn đăng ký đã được sử dụng, vui lòng đăng kí với một số điện thoại khác</string>
 
 
 </resources>

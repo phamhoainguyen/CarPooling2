@@ -2,6 +2,7 @@ package com.example.admin.carpooling2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -203,6 +204,11 @@ public class PhoneVerification extends AppCompatActivity implements VerifyReques
                                     User newUser = new User(user.getUid(),name,phone);
                                     FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).setValue(newUser);
                                     MainActivity.currentUser = newUser;
+                                    SharedPreferences cache = getSharedPreferences("cache",MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = cache.edit();
+                                    editor.putString("id",user.getUid());
+
+                                    editor.commit();
                                     dialog.dismiss();
                                     startActivity(intent);
 
