@@ -2,13 +2,23 @@ package utils;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Patterns;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import model.Route;
 
 
 /**
@@ -51,6 +61,37 @@ public class Utils {
         return address + ", " + city + ", " + state + ", " + country;
     }
 
+    public static BitmapDescriptor createPureTextIcon(String text) {
 
+        Paint textPaint = new Paint(); // Adapt to your needs
+
+        float textWidth = textPaint.measureText(text);
+        float textHeight = textPaint.getTextSize();
+        int width = (int) (textWidth);
+        int height = (int) (textHeight);
+
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(image);
+
+
+        canvas.translate(0, height);
+
+        // For development only:
+        // Set a background in order to see the
+        // full size and positioning of the bitmap.
+        // Remove that for a fully transparent icon.
+        canvas.drawColor(Color.LTGRAY);
+
+        canvas.drawText(text, 0, 0, textPaint);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(image);
+        return icon;
+    }
+
+
+    public static LatLng getCenterPointOfRoute(Route route){
+
+        int i = (int)route.points.size() / 2;
+        return route.points.get(i);
+    }
 
 }

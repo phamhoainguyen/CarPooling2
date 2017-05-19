@@ -13,11 +13,13 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import model.Route;
+import utils.Utils;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback {
     private final String TAG = "Map";
@@ -70,20 +72,25 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
 
-
         mMap.addMarker(new MarkerOptions()
 
                 .title(route.startAddress)
-                .position(route.startLocation));
+                .position(route.startLocation).icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholde_24)));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(Utils.getCenterPointOfRoute(route))).setIcon(Utils.createPureTextIcon(route.distance + ", "+ route.duration));
+
         mMap.addMarker(new MarkerOptions()
 
                 .title(route.endAddress)
-                .position(route.endLocation));
+                .position(route.endLocation).icon(BitmapDescriptorFactory.fromResource(R.drawable.destination_24)));
 
         PolylineOptions polylineOptions = new PolylineOptions().
                 geodesic(true).
@@ -113,6 +120,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
             return 11;
         }
         else if(distance >= (float)50 && distance < (float)100) {
+            return 10;
+        }
+        else if(distance >= (float)100 && distance < (float)300) {
             return 9;
         }
         else{
