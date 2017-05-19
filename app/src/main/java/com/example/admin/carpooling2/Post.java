@@ -8,24 +8,19 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
@@ -49,7 +44,7 @@ import model.Record;
 import model.Route;
 import utils.DirectionFinder;
 import utils.DirectionFinderListener;
-import utils.GooglePlacesAutocompleteAdapter;
+import utils.Utils;
 
 /**
  * Created by Admin on 4/16/2017.
@@ -68,13 +63,14 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
     private Button btnLocation;
 
-    private GPSService gpsService;
+    //private GPSService gpsService;
     private EditText editStartDate;
     private EditText editStartTime;
     private EditText editOrigin;
     private EditText editDestination;
 
     private RadioButton radioMotobike;
+    private boolean gpsStatus;
 
     LastKnownLocation lastKnownLocation;
 
@@ -86,6 +82,8 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
     boolean isOriginSuggestion = false;
     boolean isDesSuggestion = false;
     boolean isWayPointSuggestion = false;
+    private Location myLocation;
+    private String myAddress;
     //progress dialog
     ProgressDialog progressDialog;
 
@@ -102,10 +100,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
         */
 
 
+
         // Button btnLocation
         btnLocation = (Button) view.findViewById(R.id.btnLocation);
-        gpsService = new GPSService(getActivity());
-
 
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setClick(R.id.btnPost, view);
@@ -194,6 +191,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
         //AutoComplete Origin
         editOrigin = (EditText) view.findViewById(R.id.editOrigin);
+        if(Utils.currentUserAddress != null){
+            editOrigin.setText(Utils.currentUserAddress);
+        }
         editOrigin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -240,19 +240,8 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
         setClick(R.id.radioMotobike, view);
         setClick(R.id.radioCar, view);
         setClick(R.id.radioPassenger, view);
-
         setClick(R.id.btnLocation, view);
 
-
-        // kiểm tra google play services
-        if (gpsService.checkPlayServices()) {
-
-            // Building the GoogleApi client
-            gpsService.buildGoogleApiClient();
-            gpsService.mGoogleApiClient.connect();
-        }
-
-        GPSRequirement.checkGPSStatus(getActivity());
 
         return view;
     }
@@ -283,7 +272,12 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
             }
 
             record = new Record();
-            record.origin = origin;
+            if(myLocation != null){
+                record.origin = myAddress;
+            }
+            else {
+                record.origin = origin;
+            }
             record.destination = destination;
 
 
@@ -300,15 +294,6 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
             }
         }
-        if(v.getId() == R.id.btnLocation){
-//            Toast.makeText(getActivity(),
-//                    "Nhan dc su kien.", Toast.LENGTH_LONG).show();
-            gpsService.getDeviceLocation();
-            gpsService.getmLastLocation();
-            Toast.makeText(getActivity(),
-                    gpsService.getmLastLocation().getLatitude() + ", " +  gpsService.getmLastLocation().getLongitude(), Toast.LENGTH_LONG).show();
-        }
-
     }
 
     //onDirectionsuccess
@@ -369,28 +354,6 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
                 editOrigin.setText(place.getAddress());
             }
 
-        }
-    }
-
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        gpsService.checkPlayServices();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (gpsService.mGoogleApiClient != null) {
-            gpsService.mGoogleApiClient.connect();
-        }
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (gpsService.mGoogleApiClient != null) {
-            gpsService.mGoogleApiClient.disconnect();
         }
     }
 

@@ -1,24 +1,16 @@
 package com.example.admin.carpooling2;
 
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-
-import android.support.design.widget.Snackbar;
-
-
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -39,9 +31,11 @@ public class MainActivity extends AppCompatActivity
     //control
     ImageView imgProfile;
     TextView txtName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,6 +51,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         //load hinh va ten
 
+
+
         txtName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtName);
         imgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgProfile);
         if(currentUser.urlProfile != null)
@@ -69,9 +65,14 @@ public class MainActivity extends AppCompatActivity
                 .into(imgProfile);
 
         txtName.setText(currentUser.name);
+
+
         fragmentManager = getFragmentManager();
 
     }
+
+
+
 
 
 
@@ -166,6 +167,10 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
 
+    }
 
 }

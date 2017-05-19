@@ -10,15 +10,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -40,7 +35,7 @@ import model.Record;
 import model.Route;
 import utils.DirectionFinder;
 import utils.DirectionFinderListener;
-import utils.GooglePlacesAutocompleteAdapter;
+import utils.Utils;
 
 /**
  * Created by Admin on 4/20/2017.
@@ -69,6 +64,8 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
         View view = inflater.inflate(R.layout.search,container,false);
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setClick(R.id.btnFind, view);
+
+
 
         //check motobike
         radioMotobikeSearch = (RadioButton) view.findViewById(R.id.radioMotobikeSearch);
@@ -145,7 +142,11 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
 
 
               //--------------------------------Auto Complete Origin Search-------------------------------------
+
         editOrigin = (EditText) view.findViewById(R.id.editOrigin);
+        if(Utils.currentUserAddress != null){
+            editOrigin.setText(Utils.currentUserAddress);
+        }
         editOrigin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -296,4 +297,6 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
 
         }
     }
+
+
 }
