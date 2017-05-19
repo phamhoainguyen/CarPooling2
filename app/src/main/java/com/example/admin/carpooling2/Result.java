@@ -54,8 +54,9 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
 
         fragmentManager = getFragmentManager();
 
-        list = new ArrayList<Record>();
+
         FirebaseDatabase.getInstance().getReference().child("record").addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 progressDialog.dismiss();
@@ -66,7 +67,9 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
                     return;
                 }
                 else {
+                    list = new ArrayList<Record>();
                     Record temp;
+
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
                         // lấy tất cả các record từ firebase
                         temp = data.getValue(Record.class);
@@ -101,13 +104,12 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
                 }
 
             }
-
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+        progressDialog = ProgressDialog.show(getActivity(), null, getResources().getString(R.string.wait));
 
         return  view;
     }
@@ -117,7 +119,7 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
     public void onResume() {
         super.onResume();
         //----------------------------------Còn BUG--------------------------------------------
-        progressDialog = ProgressDialog.show(getActivity(), null,"Xin vui lòng đợi, quá trình đang được xử lý...");
+        //progressDialog = ProgressDialog.show(getActivity(), null,"Xin vui lòng đợi, quá trình đang được xử lý...");
 
     }
 
