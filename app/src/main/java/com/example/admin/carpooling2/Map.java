@@ -85,7 +85,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback {
                 .position(route.startLocation).icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholde_24)));
 
         mMap.addMarker(new MarkerOptions()
-                .position(Utils.getCenterPointOfRoute(route))).setIcon(Utils.createPureTextIcon(route.distance + ", "+ route.duration));
+                .position(Utils.getCenterPointOfRoute(route))).setIcon(Utils.createPureTextIcon(route.distance + "\n"+ route.duration));
 
         mMap.addMarker(new MarkerOptions()
 

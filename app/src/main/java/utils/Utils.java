@@ -65,14 +65,14 @@ public class Utils {
 
         Paint textPaint = new Paint(); // Adapt to your needs
 
+        textPaint.setTextSize(25);
         float textWidth = textPaint.measureText(text);
         float textHeight = textPaint.getTextSize();
         int width = (int) (textWidth);
-        int height = (int) (textHeight);
+        int height = (int) ((textHeight));
 
         Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(image);
-
 
         canvas.translate(0, height);
 
@@ -80,7 +80,7 @@ public class Utils {
         // Set a background in order to see the
         // full size and positioning of the bitmap.
         // Remove that for a fully transparent icon.
-        canvas.drawColor(Color.LTGRAY);
+        canvas.drawColor(Color.WHITE);
 
         canvas.drawText(text, 0, 0, textPaint);
         BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(image);
