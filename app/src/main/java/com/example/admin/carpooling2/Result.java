@@ -118,8 +118,6 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        //----------------------------------Còn BUG--------------------------------------------
-        //progressDialog = ProgressDialog.show(getActivity(), null,"Xin vui lòng đợi, quá trình đang được xử lý...");
 
     }
 

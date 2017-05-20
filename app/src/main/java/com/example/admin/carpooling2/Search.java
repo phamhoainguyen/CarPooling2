@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,6 +113,7 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
 
         // chạm vào edit text show lên đồng hồ để lấy thời gian khởi hành
         editStartTimeSearch = (EditText) view.findViewById(R.id.editStartTimeSearch);
+        editStartTimeSearch.setInputType(InputType.TYPE_NULL);
         editStartTimeSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -133,6 +135,7 @@ public class Search extends Fragment implements View.OnClickListener, DirectionF
                                     editStartTimeSearch.clearFocus();
                                 }
                             }, mHour, mMinute, false);
+
                     timePickerDialog.show();
 
                 }

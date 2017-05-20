@@ -129,7 +129,6 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
 
-
                                     editStartDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                     editStartDate.clearFocus();
 
@@ -138,7 +137,6 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
                     datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                             editStartDate.clearFocus();
                         }
                     });
@@ -173,18 +171,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
                                     editStartTime.clearFocus();
                                 }
                             }, mHour, mMinute, false);
-                    timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            editStartTime.clearFocus();
-                        }
-                    });
 
                     timePickerDialog.show();
-
                 }
-
             }
         });
 
