@@ -308,6 +308,7 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
                 Log.e(TAG, "onActivityResult result_ok");
 
                 String key = FirebaseDatabase.getInstance().getReference("record").push().getKey();
+                record.rid = key;
                 FirebaseDatabase.getInstance().getReference("record").child(key).setValue(record).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

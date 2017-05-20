@@ -79,9 +79,10 @@ public class Profile extends Fragment implements View.OnClickListener {
     EditText editAge;
     EditText editCity;
 
+
     Spinner spinnerGender;
     Button btnUpdate;
-    TextView txtUpload;
+    Button btnUpload;
     ImageView imgProfile;
     //progress diaglog
     ProgressDialog progressDialog;
@@ -99,11 +100,11 @@ public class Profile extends Fragment implements View.OnClickListener {
         editCity = (EditText) view.findViewById(R.id.editCity);
         spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
-        txtUpload = (TextView) view.findViewById(R.id.txtUpload);
+        btnUpload = (Button) view.findViewById(R.id.btnUpload);
         //Phone khong dc sua
         editPhone.setEnabled(false);
         //set Click
-        txtUpload.setOnClickListener(this);
+        btnUpload.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
         //bind du lieu cho spinner
         ArrayList<String> lisGender = new ArrayList<String>();
@@ -168,7 +169,7 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.txtUpload)
+        if(v.getId() == R.id.btnUpload)
         {
             Intent intent = new Intent();
             intent.setType("image/*");

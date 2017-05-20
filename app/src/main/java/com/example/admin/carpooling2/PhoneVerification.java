@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +55,9 @@ public class PhoneVerification extends AppCompatActivity implements VerifyReques
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.phone_verification);
+        // bar menu
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
         phone = intent.getStringExtra("phone");
@@ -243,6 +247,21 @@ public class PhoneVerification extends AppCompatActivity implements VerifyReques
         }
 
 
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            case android.R.id.home:
+            {
+                finish();
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
 
     }
 }

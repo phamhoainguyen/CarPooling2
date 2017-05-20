@@ -10,15 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.daimajia.swipe.util.Attributes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
 
 import model.Record;
 
@@ -26,10 +27,10 @@ import model.Record;
  * Created by Admin on 5/18/2017.
  */
 
-public class History extends Fragment {
+public class History extends Fragment implements HistorySwiftAdapter.DeleteListener {
     private final String TAG = "History";
     private RecyclerView rvHistory;
-    private HistoryAdapter adapter;
+    private HistorySwiftAdapter adapter;
     private ArrayList<Record> list;
     ProgressDialog dialog;
     @Nullable
@@ -38,6 +39,13 @@ public class History extends Fragment {
         View view = inflater.inflate(R.layout.history,container,false);
         list = new ArrayList<Record>();
         rvHistory = (RecyclerView) view.findViewById(R.id.rvHistory);
+        // Tạo layout cho recyclerView là vertical
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        //Set layout cho recyclerView
+        rvHistory.setLayoutManager(linearLayoutManager);
+       //rvHistory.addItemDecoration(new SimpleDividerItemDecoration(getResources().getDrawable(R.drawable.line_divider)));
+
         FirebaseDatabase.getInstance().getReference("record").orderByChild("uid").equalTo(MainActivity.currentUser.id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -48,13 +56,12 @@ public class History extends Fragment {
                    record = data.getValue(Record.class);
                    list.add(record);
                }
-                adapter = new HistoryAdapter(list,getActivity());
-                rvHistory.setAdapter(adapter);
-                // Tạo layout cho recyclerView là vertical
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+               Collections.reverse(list);
+                adapter = new HistorySwiftAdapter(list,getActivity(),History.this);
 
-                //Set layout cho recyclerView
-                rvHistory.setLayoutManager(linearLayoutManager);
+                adapter.setMode(Attributes.Mode.Multiple);
+                rvHistory.setAdapter(adapter);
+
                 dialog.dismiss();
 
 
@@ -68,5 +75,26 @@ public class History extends Fragment {
         dialog = ProgressDialog.show(getActivity(),null,getResources().getString(R.string.wait));
 
         return  view;
+    }
+
+    @Override
+    public void itemDeleted(String rid, int position) {
+        dialog = ProgressDialog.show(getActivity(),null,getResources().getString(R.string.wait));
+        FirebaseDatabase.getInstance().getReference("record").child(rid).removeValue();
+        list.remove(position);
+        /*
+        adapter = new HistorySwiftAdapter(list,getActivity(),History.this);
+
+        adapter.setMode(Attributes.Mode.Single);
+        rvHistory.setAdapter(adapter);
+        */
+        rvHistory.removeViewAt(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemRangeChanged(position, list.size());
+         adapter.closeAllItems();
+        dialog.dismiss();
+        Toast.makeText(getActivity(),getResources().getString(R.string.success_delete),Toast.LENGTH_LONG).show();
+
+
     }
 }

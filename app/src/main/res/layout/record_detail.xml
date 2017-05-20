@@ -11,154 +11,156 @@
         android:id="@+id/mapRecordDetailFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_weight="0.41" />
+        android:layout_height="240dp" />
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
         <ImageView
-            android:id="@+id/imageView2Detail"
-            android:layout_width="64dp"
-            android:layout_height="56dp"
+            android:id="@+id/imgProfile"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             app:srcCompat="@drawable/ic_menu_gallery"
-            tools:layout_editor_absoluteY="2dp"
-            tools:layout_editor_absoluteX="2dp" />
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/imgProfile"
+                android:layout_x="101dp"
+                android:layout_y="2dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/txtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/txtGenderAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/txtPhone"
+                android:layout_alignBottom="@+id/txtPhone"
+                android:layout_toEndOf="@+id/txtPhone"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/txtCity"
+                android:layout_toEndOf="@+id/imgProfile"
+                android:layout_x="230dp"
+                android:layout_y="33dp"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
         <TextView
-            android:id="@+id/textViewMoneyDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:text="300000"
-            app:layout_constraintLeft_toRightOf="@+id/textViewPriceDetail"
+            android:id="@+id/txtOrigin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewToDetail" />
-
-        <TextView
-            android:id="@+id/textViewOriginDetail"
-            android:layout_width="145dp"
-            android:layout_height="17dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/imageView2Detail"
+            android:text="origin"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewDestinationDetail"
-            android:layout_width="145dp"
-            android:layout_height="17dp"
-            android:text=""
+            android:id="@+id/txtDestination"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:text="des"
+            android:textSize="20sp"
             app:layout_constraintLeft_toRightOf="@+id/textViewToDetail"
-            android:layout_marginLeft="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="2dp" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:text="Khởi hành: "
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@+id/imgProfile"
+                app:layout_constraintTop_toBottomOf="@+id/txtVehicle" />
+
+            <TextView
+                android:id="@+id/txtTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:text="14:30 22-05-2017"
+                android:textSize="20sp"
+                app:layout_constraintLeft_toRightOf="@+id/txtDate"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPriceDetail" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textViewNameDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="0dp"
-            android:text="Phạm Hoài Nguyên"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2Detail" />
-
-        <TextView
-            android:id="@+id/textViewPriceDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giá: "
-            app:layout_constraintLeft_toRightOf="@+id/textViewVehicleDetail"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewOriginDetail" />
-
-        <TextView
-            android:id="@+id/textViewToDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="đến"
-            app:layout_constraintLeft_toRightOf="@+id/textViewOriginDetail"
-            android:layout_marginLeft="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="2dp" />
-
-        <TextView
-            android:id="@+id/textViewVehicleDetail"
-            android:layout_width="70dp"
-            android:layout_height="17dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintLeft_toRightOf="@+id/imageView2Detail"
-            app:layout_constraintTop_toBottomOf="@+id/textViewOriginDetail" />
-
-        <TextView
-            android:id="@+id/textViewPriceUnitDetail"
-            android:layout_width="59dp"
-            android:layout_height="17dp"
-            android:text="VNĐ/Chỗ"
-            app:layout_constraintLeft_toRightOf="@+id/textViewMoneyDetail"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDestinationDetail" />
-
-        <TextView
-            android:id="@+id/textViewLabelTimeStartDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginTop="2dp"
-            android:text="Khởi hành: "
-            app:layout_constraintLeft_toRightOf="@+id/imageView2Detail"
-            app:layout_constraintTop_toBottomOf="@+id/textViewVehicleDetail" />
-
-        <TextView
-            android:id="@+id/textViewTimeStartDetail"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtVehicle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
-            android:text="14:30 22-05-2017"
-            app:layout_constraintLeft_toRightOf="@+id/textViewLabelTimeStartDetail"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPriceDetail" />
+            android:text="xe"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@+id/imgProfile"
+            app:layout_constraintTop_toBottomOf="@+id/txtOrigin" />
 
         <TextView
-            android:id="@+id/textViewSeatDetail"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:text="10"
-            app:layout_constraintLeft_toRightOf="@+id/textViewTimeStartDetail"
-            android:layout_marginLeft="72dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPriceUnitDetail" />
-
-        <CheckBox
-            android:id="@+id/checkboxLuggageDetail"
-            android:layout_width="113dp"
-            android:layout_height="17dp"
-            android:text="Hành lý"
-            android:layout_marginTop="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTimeStartDetail"
-            app:layout_constraintLeft_toRightOf="@+id/textViewNameDetail"
-            android:layout_marginLeft="100dp" />
-
-        <TextView
-            android:id="@+id/textViewLabelSeatDetail"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtMoney"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
-            android:text="Chỗ"
-            app:layout_constraintLeft_toRightOf="@+id/textViewSeatDetail"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPriceUnitDetail" />
+            android:text="300000"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toRightOf="@+id/textViewPriceDetail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewToDetail" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/buttonCall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gọi điện" />
+        android:text="Gọi tài xế" />
 
 </LinearLayout>

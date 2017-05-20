@@ -2,6 +2,7 @@ package com.example.admin.carpooling2;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,8 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -34,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import model.Record;
 import model.Route;
 import model.User;
@@ -50,11 +54,28 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
     private  final String TAG = "RecordDetail";
     private GoogleMap mMap;
     public Route route;
+    private User user;
     private Button buttonCall;
     private static final int REQUEST_CALL = 1;
     private Intent callIntent;
 
     private Record record;
+    private  TextView txtName;
+    private  TextView txtCity;
+    private  TextView txtGender;
+    private  TextView txtAge;
+    private  TextView txtPhone;
+    private ImageView imgProfile;
+
+    private TextView txtOrigin;
+    private TextView txtDestination;
+    private TextView txtDate;
+    private TextView txtTime;
+    private TextView txtVehicle;
+    private TextView txtPrice;
+
+    ProgressDialog dialog;
+
 
     public RecordDetail(Record record){
         this.record = record;
@@ -66,24 +87,30 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.record_detail, container, false);
 
-        TextView textViewOriginDetail = (TextView) view.findViewById(R.id.textViewOriginDetail);
-        TextView textViewDestinationDetail = (TextView) view.findViewById(R.id.textViewDestinationDetail);
-        TextView textViewMoneyDetail = (TextView) view.findViewById(R.id.textViewMoneyDetail);
-        TextView textViewNameDetail = (TextView) view.findViewById(R.id.textViewNameDetail);
-        TextView textViewVehicleDetail = (TextView) view.findViewById(R.id.textViewVehicleDetail);
-        TextView textViewTimeStartDetail = (TextView) view.findViewById(R.id.textViewTimeStartDetail);
-        TextView textViewSeatDetail = (TextView) view.findViewById(R.id.textViewSeatDetail);
-        CheckBox checkboxLuggageDetail = (CheckBox) view.findViewById(R.id.checkboxLuggageDetail);
+        txtOrigin = (TextView) view.findViewById(R.id.txtOrigin);
+        txtDestination = (TextView) view.findViewById(R.id.txtDestination);
+        txtDate = (TextView) view.findViewById(R.id.txtDate);
+        txtTime = (TextView) view.findViewById(R.id.txtTime);
+        txtVehicle = (TextView) view.findViewById(R.id.txtVehicle);
+        txtPrice = (TextView) view.findViewById(R.id.txtMoney);
 
-        textViewOriginDetail.setText(record.origin);
-        textViewDestinationDetail.setText(record.destination);
-        textViewMoneyDetail.setText(record.price);
-        textViewNameDetail.setText(record.name);
-        textViewVehicleDetail.setText(record.vehicle);
-        textViewTimeStartDetail.setText(record.time +" " + record.date);
+        imgProfile = (ImageView) view.findViewById(R.id.imgProfile);
+        txtName = (TextView) view.findViewById(R.id.txtName);
+        txtCity = (TextView) view.findViewById(R.id.txtCity);
+      //  txtGender = (TextView) view.findViewById(R.id.txtGender);
+       // txtAge = (TextView) view.findViewById(R.id.txtAge);
+        txtPhone = (TextView) view.findViewById(R.id.txtPhone);
 
+        txtOrigin.setText(record.origin);
+        txtDestination.setText(record.destination);
+        txtDate.setText(record.date);
+        txtTime.setText(record.time);
+        txtVehicle.setText(record.vehicle);
+        txtPrice.setText(record.price);
 
         buttonCall = (Button) view.findViewById(R.id.buttonCall);
+
+
         /*
        textViewSeatDetail.setText(String.valueOf(record.sit));
         if(record.luggage) {
@@ -92,25 +119,83 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
         else
             checkboxLuggageDetail.setChecked(false);
             */
+         FirebaseDatabase.getInstance().getReference("users").child(record.uid).addListenerForSingleValueEvent(new ValueEventListener() {
+             @Override
+             public void onDataChange(DataSnapshot dataSnapshot) {
+                 user = dataSnapshot.getValue(User.class);
+                 txtName.setText(record.name);
+                 if(user.city != null)
+                 {
+                     txtCity.setText(user.city);
+                 }
+                 else
+                 {
+                     txtCity.setText("Chưa cập nhật nơi sinh sống");
+                 }
+                 if(user.gender == 0)
+                 {
+                     txtGender.setText("Chưa cập nhật giới tính");
+                 }
+                 else if(user.gender == 1)
+                 {
+                     txtGender.setText("Nam");
+                 }
+                 else if(user.gender == 2)
+                 {
+                     txtGender.setText("Nữ");
+                 }
+                 if(user.age == 0)
+                 {
+                     txtAge.setText(",chưa cập nhật tuổi");
+                 }
+                 else
+                 {
+                     txtAge.setText( user.age+" tuổi");
+                 }
+                 txtPhone.setText(user.phone);
+                 if(user.urlProfile != null)
+                 {
+                     Glide.with(getActivity()).load(user.urlProfile)
+                               .bitmapTransform(new CropSquareTransformation(getActivity()))
+                               .into(imgProfile);
+                 }
+                 else
+                 {
+                     Glide.with(getActivity()).load(R.drawable.default_avatar)
+                             .bitmapTransform(new CropSquareTransformation(getActivity()))
+                             .into(imgProfile);
+                 }
+                 dialog.dismiss();
+
+             }
+
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
+
+             }
+         });
+         dialog = ProgressDialog.show(getActivity(),null,getResources().getString(R.string.wait));
 
 
         buttonCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + getUser(record.uid).phone));
+
+                callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + user.phone));
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
                     ActivityCompat.requestPermissions(getActivity() ,new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL);
                 }else {
                     startActivity(callIntent);
                 }
+
             }
 
         });
 
         return view;
     }
-
+/*
     public static User getUser(String uid){
 
         final User user[] = new User[1];
@@ -131,6 +216,7 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
         });
         return user[0];
     }
+    */
 
 
 

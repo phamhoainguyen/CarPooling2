@@ -2,11 +2,16 @@ package com.example.admin.carpooling2;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +41,7 @@ public class Register extends AppCompatActivity {
     private EditText edtPass;
     private EditText edtConfirmPass;
     private  EditText editPhone;
-    private Button btnRegister;
+
     private ProgressDialog progressDialog;
 
 
@@ -44,16 +49,36 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
+
+        // bar menu
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         editPhone = (EditText) findViewById(R.id.editPhone);
         edtName = (EditText) findViewById(R.id.edtName);
         edtPass = (EditText) findViewById(R.id.edtPass);
         edtConfirmPass = (EditText) findViewById(R.id.edtConfirmPass);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-               final String name = edtName.getText().toString();
+
+
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_register,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.editNext:
+            {
+                final String name = edtName.getText().toString();
                 final String pass = edtPass.getText().toString();
 
                 String confirmPass = edtConfirmPass.getText().toString();
@@ -62,24 +87,24 @@ public class Register extends AppCompatActivity {
                 if(name.length() == 0 || pass.length() == 0 || confirmPass.length() ==0 || phone.length() == 0)
                 {
                     Toast.makeText(Register.this,getResources().getString(R.string.blank_field),Toast.LENGTH_LONG).show();
-                    return;
+                    return true;
                 }
 
                 if(!Utils.isValidPhone(phone))
                 {
                     Toast.makeText(Register.this,getResources().getString(R.string.invalid_phone),Toast.LENGTH_LONG).show();
-                    return;
+                    return true;
                 }
 
                 if(pass.length() < 6)
                 {
                     Toast.makeText(Register.this,getResources().getString(R.string.invalid_pass),Toast.LENGTH_LONG).show();
-                    return;
+                    return true;
                 }
                 if(!confirmPass.equals(pass))
                 {
                     Toast.makeText(Register.this,getResources().getString(R.string.invalid_confirm_pass),Toast.LENGTH_LONG).show();
-                    return;
+                    return true;
                 }
 
                 Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("phone").equalTo(phone);
@@ -110,12 +135,14 @@ public class Register extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e(TAG,"onCancelled error=" + databaseError.toString());
+                        return;
 
                     }
                 });
+
                 progressDialog = ProgressDialog.show(Register.this,null,getResources().getString(R.string.wait));
 
-
+                 return true;
 
 
 
@@ -126,8 +153,18 @@ public class Register extends AppCompatActivity {
 
 
             }
-        });
+            case android.R.id.home:
+                   {
+                           finish();
+                   }
+            default:
+                return super.onOptionsItemSelected(item);
+
+            }
+
+
+        }
 
 
     }
-}
+

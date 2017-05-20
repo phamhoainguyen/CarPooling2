@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 public class Record implements Serializable {
-
+    public String rid;
     public String uid;
     public String name;
 

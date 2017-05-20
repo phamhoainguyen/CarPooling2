@@ -21,6 +21,7 @@
         <!-- login -->
         <activity
             android:name=".Login"
+            android:theme="@style/AppTheme.NoActionBar"
             >
 
         </activity>
@@ -28,10 +29,14 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Register" />
+        <activity android:name=".Register"
+            android:theme="@style/AppTheme.ActionBar.Transparent"
+            />
         <activity android:name=".Map" />
         <!-- <activity android:name=".RecordDetail"></activity> -->
-        <activity android:name=".PhoneVerification" />
+        <activity android:name=".PhoneVerification"
+            android:theme="@style/AppTheme.ActionBar.Transparent"
+            />
         <activity android:name=".Splash"
                android:theme="@style/AppTheme.NoActionBar"
 

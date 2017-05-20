@@ -49,7 +49,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.RecordVi
         holder.txtOrigin.setText(record.origin);
         holder.txtDate.setText(record.date);
         holder.txtTime.setText(record.time);
-        holder.txtName.setText(record.name);
+        //holder.txtName.setText(record.name);
 
 
     }
@@ -64,6 +64,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.RecordVi
     }
 
 
+
     // Class chứa các thành phần của 1 itemRecord
     class RecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtOrigin;
@@ -71,7 +72,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.RecordVi
         private TextView txtDate;
         private TextView txtTime;
         private ImageView imgVehicle;
-        private TextView txtName;
+       // private TextView txtName;
 
 
 
@@ -83,7 +84,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.RecordVi
             txtOrigin =(TextView) v.findViewById(R.id.txtOrigin);
             txtDestination =(TextView) v.findViewById(R.id.txtDestination);
             txtTime = (TextView) v.findViewById(R.id.txtTime);
-            txtName = (TextView) v.findViewById(R.id.txtName);
+           // txtName = (TextView) v.findViewById(R.id.txtName);
             imgVehicle = (ImageView) v.findViewById(R.id.imgVehicle);
 
             // Set su kien click cho itemView

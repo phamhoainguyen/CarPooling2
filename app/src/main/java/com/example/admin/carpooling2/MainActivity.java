@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        txtName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtName);
+        txtName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.txtOrigin);
         imgProfile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imgProfile);
         if(currentUser.urlProfile != null)
             Glide.with(MainActivity.this).load(currentUser.urlProfile)

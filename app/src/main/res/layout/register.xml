@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.admin.carpooling2.Register">
+    tools:context="com.example.admin.carpooling2.Register"
+
+    >
 
     <EditText
         android:id="@+id/edtName"
@@ -13,12 +15,17 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/name"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="50dp"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:ems="10"
         android:hint="@string/phone"
         android:inputType="phone" />
@@ -27,6 +34,8 @@
         android:id="@+id/edtPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword" />
@@ -35,13 +44,10 @@
         android:id="@+id/edtConfirmPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:ems="10"
         android:hint="@string/confirm_password"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/register" />
 </LinearLayout>

@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="create_an_account"><u>Tạo tài khoản</u></string>
+    <string name="create_an_account">Đăng ký</string>
     <string name="my_profile">Hồ sơ cá nhân</string>
     <string name="search_trip" translatable="false">Tìm kiếm</string>
     <string name="post_trip">Đăng chuyến đi</string>
@@ -34,7 +34,7 @@
     <string name="Edit">Chỉnh sữa</string>
     <string name="post">Đăng</string>
     <string name="Save">Lưu</string>
-    <string name="upload_profile_picture"><u>Upload hình đại diện</u></string>
+    <string name="upload_profile_picture">Thay đổi ảnh</string>
     <string name="name">Họ tên</string>
     <string name="phone">Số điện thoại di động</string>
     <string name="mail">Địa chỉ email</string>
@@ -66,6 +66,7 @@
     <string name="already_have_phone">Số điện thoại này đã được đăng kí trước đó, vui lòng nhập số điện thoại mới</string>
     <string name="history">Nhật ký hoạt động</string>
     <string name="already_register">Số điện thoại bạn đăng ký đã được sử dụng, vui lòng đăng kí với một số điện thoại khác</string>
+    <string name="success_delete">Xóa thành công</string>
 
 
 </resources>
