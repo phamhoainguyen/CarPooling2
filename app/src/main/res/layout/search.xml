@@ -10,21 +10,31 @@
 
     <EditText
         android:id="@+id/editOrigin"
-        android:layout_width="368dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/border_edittext"
         android:ems="10"
         android:hint="@string/orgin"
         android:inputType="textPersonName"
+        android:padding="10dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <EditText
         android:id="@+id/editDestination"
-        android:layout_width="368dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border_edittext"
         android:ems="10"
         android:hint="@string/destination"
         android:inputType="textPersonName"
+        android:padding="10dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="60dp" />
 
@@ -32,8 +42,8 @@
         android:id="@+id/textViewVehicleSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
         android:text="Phương tiện"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,7 +54,9 @@
         android:id="@+id/radioVehiclegroupSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:weightSum="3"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteY="191dp">
@@ -74,16 +86,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
         <EditText
             android:id="@+id/editStartDateSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/border_edittext"
             android:ems="10"
             android:hint="@string/date_start"
+            android:padding="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioVehiclegroupSearch" />
 
@@ -91,10 +109,13 @@
             android:id="@+id/editStartTimeSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:background="@drawable/border_edittext"
             android:ems="10"
             android:hint="@string/time_start"
             android:inputType="textPersonName"
+            android:padding="10dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioVehiclegroupSearch" />
 
@@ -104,12 +125,17 @@
         android:id="@+id/btnFind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+
+        android:layout_marginRight="25dp"
+
+        android:layout_marginTop="40dp"
+
+        android:background="@drawable/button_corner_normal"
+        android:elevation="1dp"
         android:text="@string/find"
-
         app:layout_constraintHorizontal_bias="0.513"
-
         app:layout_constraintLeft_toLeftOf="parent"
-
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editStartDateSearch" />
 

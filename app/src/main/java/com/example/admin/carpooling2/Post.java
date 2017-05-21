@@ -61,7 +61,7 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
     //control
 
-    private Button btnLocation;
+   // private Button btnLocation;
 
     //private GPSService gpsService;
     private EditText editStartDate;
@@ -102,7 +102,7 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
 
         // Button btnLocation
-        btnLocation = (Button) view.findViewById(R.id.btnLocation);
+       // btnLocation = (Button) view.findViewById(R.id.btnLocation);
 
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setClick(R.id.btnPost, view);
@@ -229,7 +229,7 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
         setClick(R.id.radioMotobike, view);
         setClick(R.id.radioCar, view);
         setClick(R.id.radioPassenger, view);
-        setClick(R.id.btnLocation, view);
+       // setClick(R.id.btnLocation, view);
 
 
         return view;
@@ -272,6 +272,9 @@ public class Post extends Fragment implements DirectionFinderListener, View.OnCl
 
             record.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             record.name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            if(MainActivity.currentUser.urlProfile != null) {
+                record.urlProfile = MainActivity.currentUser.urlProfile;
+            }
             record.vehicle = ((RadioButton) getView().findViewById(radioCheckedID)).getText().toString();
             record.date = date;
             record.time = time;

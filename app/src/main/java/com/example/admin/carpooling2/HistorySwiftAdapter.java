@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import model.Record;
 
 /**
@@ -47,8 +49,19 @@ public class HistorySwiftAdapter extends RecyclerSwipeAdapter<HistorySwiftAdapte
         final Record record = list.get(position);
         viewHolder.txtDestination.setText(record.destination);
         viewHolder.txtOrigin.setText(record.origin);
-        viewHolder.txtDate.setText(record.date);
-        viewHolder.txtTime.setText(record.time);
+        viewHolder.txtTime.setText(record.date +"  " + record.time);
+        if(record.urlProfile != null)
+        {
+            Glide.with(context).load(record.urlProfile)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(viewHolder.imgProfile);
+        }
+        else
+        {
+            Glide.with(context).load(R.drawable.default_avatar)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(viewHolder.imgProfile);
+        }
         //set swift
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper));
@@ -82,9 +95,8 @@ public class HistorySwiftAdapter extends RecyclerSwipeAdapter<HistorySwiftAdapte
         private TextView tvDelete;
         private TextView txtOrigin;
         private TextView txtDestination;
-        private TextView txtDate;
         private TextView txtTime;
-        private ImageView imgVehicle;
+        private ImageView imgProfile;
         public   SwipeLayout swipeLayout;
         // private TextView txtName;
 
@@ -94,14 +106,13 @@ public class HistorySwiftAdapter extends RecyclerSwipeAdapter<HistorySwiftAdapte
         public RecordViewHolder(View v)
         {
             super(v);
-            txtDate = (TextView) v.findViewById(R.id.txtDate);
+
             txtOrigin =(TextView) v.findViewById(R.id.txtOrigin);
             txtDestination =(TextView) v.findViewById(R.id.txtDestination);
             txtTime = (TextView) v.findViewById(R.id.txtTime);
-            // txtName = (TextView) v.findViewById(R.id.txtName);
-            imgVehicle = (ImageView) v.findViewById(R.id.imgVehicle);
             tvDelete = (TextView) v.findViewById(R.id.tvDelete);
             swipeLayout = (SwipeLayout) v.findViewById(R.id.swift);
+            imgProfile = (ImageView) v.findViewById(R.id.imgProfile);
 
         }
 

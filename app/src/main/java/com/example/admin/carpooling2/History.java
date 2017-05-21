@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import model.Record;
+import utils.SimpleDividerItemDecoration;
 
 /**
  * Created by Admin on 5/18/2017.
@@ -44,6 +45,8 @@ public class History extends Fragment implements HistorySwiftAdapter.DeleteListe
 
         //Set layout cho recyclerView
         rvHistory.setLayoutManager(linearLayoutManager);
+        rvHistory.addItemDecoration(new
+                SimpleDividerItemDecoration(getActivity()));
        //rvHistory.addItemDecoration(new SimpleDividerItemDecoration(getResources().getDrawable(R.drawable.line_divider)));
 
         FirebaseDatabase.getInstance().getReference("record").orderByChild("uid").equalTo(MainActivity.currentUser.id).addListenerForSingleValueEvent(new ValueEventListener() {

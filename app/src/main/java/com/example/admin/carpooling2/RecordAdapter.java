@@ -1,14 +1,19 @@
 package com.example.admin.carpooling2;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import model.Record;
 import utils.DirectionFinder;
 
@@ -50,10 +55,19 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         holder.txtDestination.setText(record.destination);
         holder.txtOrigin.setText(record.origin);
         holder.txtName.setText(record.name);
-        holder.txtVehicle.setText(record.vehicle);
-        holder.txtPrice.setText(record.price);
-       //holder.txtSit.setText(String.valueOf(record.sit));
-        holder.txtTimeStart.setText(record.time + " " + record.date);
+        holder.txtTimeStart.setText(record.date + "  " + record.time);
+        if(record.urlProfile != null)
+        {
+            Glide.with(context).load(record.urlProfile)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.imgProfile);
+        }
+        else
+        {
+            Glide.with(context).load(R.drawable.default_avatar)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .into(holder.imgProfile);
+        }
     }
 
     public void setClickListener(ClickListener clickListener){
@@ -71,10 +85,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         private TextView txtName;
         private TextView txtOrigin;
         private TextView txtDestination;
-        private TextView txtPrice;
-        private TextView txtSit;
         private TextView txtTimeStart;
-        private TextView txtVehicle;
+       private ImageView imgProfile;
 
 
         public RecordViewHolder(View v)
@@ -84,9 +96,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             txtOrigin =(TextView) v.findViewById(R.id.textViewOrigin);
             txtDestination =(TextView) v.findViewById(R.id.textViewDestination);
             txtTimeStart = (TextView) v.findViewById(R.id.textViewTimeStart);
-            txtPrice = (TextView) v.findViewById(R.id.textViewMoney);
-            txtSit = (TextView) v.findViewById(R.id.textViewSeat);
-            txtVehicle = (TextView) v.findViewById(R.id.textViewVehicle);
+            imgProfile = (ImageView) v.findViewById(R.id.imgProfile);
 
             // Set su kien click cho itemView
             itemView.setOnClickListener(this);

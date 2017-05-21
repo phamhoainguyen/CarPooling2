@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import model.Record;
 import model.SortByDistance;
 import model.SortRecords;
+import utils.SimpleDividerItemDecoration;
 
 /**
  * Created by Admin on 4/22/2017.
@@ -50,7 +51,15 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
         View view = inflater.inflate(R.layout.result,container,false);
 
         rvRecord =(RecyclerView) view.findViewById(R.id.rvResults);
+
         rvRecord.setHasFixedSize(true);
+        // Tạo layout cho recyclerView là vertical
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+
+        //Set layout cho recyclerView
+        rvRecord.setLayoutManager(linearLayoutManager);
+        rvRecord.addItemDecoration(new
+                SimpleDividerItemDecoration(getActivity()));
 
         fragmentManager = getFragmentManager();
 
@@ -96,11 +105,7 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
 
                     //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration();
 
-                    // Tạo layout cho recyclerView là vertical
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
-                    //Set layout cho recyclerView
-                    rvRecord.setLayoutManager(linearLayoutManager);
                 }
 
             }

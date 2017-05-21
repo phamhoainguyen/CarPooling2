@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     tools:context="com.example.admin.carpooling2.PhoneVerification"
     android:orientation="vertical"
+    android:background="@drawable/login"
     >
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
         android:text="@string/verification_instruction"
+        android:textColor="@android:color/white"
         android:textSize="24dp" />
 
     <LinearLayout
@@ -25,6 +27,8 @@
 
         <EditText
             android:id="@+id/editNumber1"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,6 +39,8 @@
 
         <EditText
             android:id="@+id/editNumber2"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -45,6 +51,8 @@
 
         <EditText
             android:id="@+id/editNumber3"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,6 +63,8 @@
 
         <EditText
             android:id="@+id/editNumber4"
+            android:backgroundTint="@android:color/white"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -72,6 +82,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="50dp"
+        android:textColor="@android:color/white"
         android:background="@drawable/button_corner"
         android:text="@string/verify" />
 

@@ -11,7 +11,7 @@
         android:id="@+id/mapRecordDetailFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="240dp" />
+        android:layout_height="220dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/imgProfile"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             app:srcCompat="@drawable/ic_menu_gallery"
@@ -33,7 +33,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="4"
+            >
 
             <TextView
                 android:id="@+id/txtName"
@@ -41,16 +43,19 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/imgProfile"
+                android:layout_weight="1"
                 android:layout_x="101dp"
                 android:layout_y="2dp"
-                android:text="TextView" />
+                android:text="Name"
+                android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/txtCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:text="TextView" />
+                android:layout_weight="1"
+                android:text="City" />
 
             <TextView
                 android:id="@+id/txtGenderAge"
@@ -59,7 +64,8 @@
                 android:layout_alignBaseline="@+id/txtPhone"
                 android:layout_alignBottom="@+id/txtPhone"
                 android:layout_toEndOf="@+id/txtPhone"
-                android:text="TextView" />
+                android:layout_weight="1"
+                android:text="gender/age" />
 
             <TextView
                 android:id="@+id/txtPhone"
@@ -67,9 +73,11 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/txtCity"
                 android:layout_toEndOf="@+id/imgProfile"
+                android:layout_weight="1"
                 android:layout_x="230dp"
                 android:layout_y="33dp"
-                android:text="TextView" />
+                android:text="phone"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -78,17 +86,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/txtOrigin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
+            android:maxLines="5"
             android:text="origin"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/imgProfile"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -96,10 +106,12 @@
             android:id="@+id/txtDestination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
+            android:maxLines="5"
             android:text="des"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/textViewToDetail"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,12 +123,13 @@
             <TextView
                 android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
-                android:layout_height="17dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
-                android:text="Khởi hành: "
-                android:textSize="20sp"
+                android:text="1/1/2017"
+                android:textSize="18sp"
+
                 app:layout_constraintLeft_toRightOf="@+id/imgProfile"
                 app:layout_constraintTop_toBottomOf="@+id/txtVehicle" />
 
@@ -127,8 +140,8 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_weight="1"
-                android:text="14:30 22-05-2017"
-                android:textSize="20sp"
+                android:text="14:30 "
+                android:textSize="18sp"
                 app:layout_constraintLeft_toRightOf="@+id/txtDate"
                 app:layout_constraintTop_toBottomOf="@+id/textViewPriceDetail" />
         </LinearLayout>
@@ -140,7 +153,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
             android:text="xe"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/imgProfile"
             app:layout_constraintTop_toBottomOf="@+id/txtOrigin" />
 
@@ -150,8 +163,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
-            android:text="300000"
-            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:text="300000 vnd"
+            android:textSize="25sp"
             app:layout_constraintLeft_toRightOf="@+id/textViewPriceDetail"
             app:layout_constraintTop_toBottomOf="@+id/textViewToDetail" />
 
@@ -161,6 +175,7 @@
         android:id="@+id/buttonCall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_corner_normal"
         android:text="Gọi tài xế" />
 
 </LinearLayout>

@@ -4,11 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@drawable/login"
     android:orientation="vertical"
     tools:context="com.example.admin.carpooling2.Login"
 
     >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:elevation="1dp"
+        app:srcCompat="@drawable/white_logo" />
 
     <EditText
         android:id="@+id/editPhone"
@@ -16,10 +25,13 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="60dp"
+        android:backgroundTint="@android:color/white"
         android:ems="10"
         android:hint="@string/phone"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
 
     <EditText
         android:id="@+id/editPass"
@@ -27,9 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white"
         android:ems="10"
         android:hint="@string/password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColorHint="@android:color/white" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -39,7 +54,8 @@
         android:layout_marginRight="25dp"
         android:layout_marginTop="25dp"
         android:background="@drawable/button_corner"
-        android:text="@string/login" />
+        android:text="@string/login"
+        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,16 +69,18 @@
             android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:text="Bạn chưa có tài khoản? " />
+            android:text="Bạn chưa có tài khoản? "
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/txtAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="21dp"
             android:layout_weight="1"
             android:text="@string/create_an_account"
+            android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>
 

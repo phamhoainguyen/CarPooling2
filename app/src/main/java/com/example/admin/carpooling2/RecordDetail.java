@@ -37,7 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import model.Record;
 import model.Route;
 import model.User;
@@ -62,8 +64,7 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
     private Record record;
     private  TextView txtName;
     private  TextView txtCity;
-    private  TextView txtGender;
-    private  TextView txtAge;
+    private  TextView txtGenderAge;
     private  TextView txtPhone;
     private ImageView imgProfile;
 
@@ -97,8 +98,8 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
         imgProfile = (ImageView) view.findViewById(R.id.imgProfile);
         txtName = (TextView) view.findViewById(R.id.txtName);
         txtCity = (TextView) view.findViewById(R.id.txtCity);
-      //  txtGender = (TextView) view.findViewById(R.id.txtGender);
-       // txtAge = (TextView) view.findViewById(R.id.txtAge);
+        txtGenderAge = (TextView) view.findViewById(R.id.txtGenderAge);
+
         txtPhone = (TextView) view.findViewById(R.id.txtPhone);
 
         txtOrigin.setText(record.origin);
@@ -106,7 +107,7 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
         txtDate.setText(record.date);
         txtTime.setText(record.time);
         txtVehicle.setText(record.vehicle);
-        txtPrice.setText(record.price);
+        txtPrice.setText(record.price +" VND");
 
         buttonCall = (Button) view.findViewById(R.id.buttonCall);
 
@@ -132,37 +133,40 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
                  {
                      txtCity.setText("Chưa cập nhật nơi sinh sống");
                  }
+                 String userGender = "";
                  if(user.gender == 0)
                  {
-                     txtGender.setText("Chưa cập nhật giới tính");
+                     userGender = "Chưa cập nhật giới tính";
                  }
                  else if(user.gender == 1)
                  {
-                     txtGender.setText("Nam");
+                     userGender = "Nam";
                  }
                  else if(user.gender == 2)
                  {
-                     txtGender.setText("Nữ");
+                     userGender = "Nữ";
                  }
                  if(user.age == 0)
                  {
-                     txtAge.setText(",chưa cập nhật tuổi");
+                     userGender += ", chưa cập nhật tuổi";
                  }
                  else
                  {
-                     txtAge.setText( user.age+" tuổi");
+                     userGender += ", " + user.age +" tuổi";
+
                  }
+                 txtGenderAge.setText(userGender);
                  txtPhone.setText(user.phone);
                  if(user.urlProfile != null)
                  {
                      Glide.with(getActivity()).load(user.urlProfile)
-                               .bitmapTransform(new CropSquareTransformation(getActivity()))
+                               .bitmapTransform(new CropCircleTransformation(getActivity()))
                                .into(imgProfile);
                  }
                  else
                  {
                      Glide.with(getActivity()).load(R.drawable.default_avatar)
-                             .bitmapTransform(new CropSquareTransformation(getActivity()))
+                             .bitmapTransform(new CropCircleTransformation(getActivity()))
                              .into(imgProfile);
                  }
                  dialog.dismiss();

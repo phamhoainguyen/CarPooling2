@@ -6,22 +6,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.admin.carpooling2.Register"
-
+    android:background="@drawable/login"
     >
 
     <EditText
         android:id="@+id/edtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/name"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="50dp"
-        android:inputType="textPersonName" />
+
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white" />
 
     <EditText
         android:id="@+id/editPhone"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -32,6 +39,9 @@
 
     <EditText
         android:id="@+id/edtPass"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -42,6 +52,9 @@
 
     <EditText
         android:id="@+id/edtConfirmPass"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"

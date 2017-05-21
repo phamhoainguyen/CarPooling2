@@ -13,22 +13,36 @@
         android:id="@+id/editOrigin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/border_edittext"
         android:ems="10"
         android:hint="@string/orgin"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:maxLines="3"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/editDestination"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="15dp"
+        android:maxLines="3"
+        android:background="@drawable/border_edittext"
         android:ems="10"
         android:hint="@string/destination"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:padding="10dp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
         android:text="Phương tiện"
         android:textSize="18sp" />
 
@@ -36,6 +50,8 @@
         android:id="@+id/radioVehiclegroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:orientation="horizontal">
 
         <RadioButton
@@ -63,24 +79,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/editStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:background="@drawable/border_edittext"
             android:ems="10"
-            android:hint="@string/date_start" />
+            android:hint="@string/date_start"
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/editStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="25dp"
             android:layout_weight="1"
+            android:background="@drawable/border_edittext"
             android:ems="10"
             android:hint="@string/time_start"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="10dp" />
     </LinearLayout>
 
 
@@ -88,20 +113,23 @@
         android:id="@+id/editPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/border_edittext"
         android:ems="10"
         android:hint="@string/price_per_sit"
-        android:inputType="number" />
+        android:inputType="number"
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/btnPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_corner_normal"
         android:text="@string/post" />
-
-    <Button
-        android:id="@+id/btnLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="GPS" />
 
 </LinearLayout>

@@ -101,8 +101,6 @@ public class Profile extends Fragment implements View.OnClickListener {
         spinnerGender = (Spinner) view.findViewById(R.id.spinnerGender);
         btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
         btnUpload = (Button) view.findViewById(R.id.btnUpload);
-        //Phone khong dc sua
-        editPhone.setEnabled(false);
         //set Click
         btnUpload.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
@@ -192,9 +190,9 @@ public class Profile extends Fragment implements View.OnClickListener {
                 return;
             }
 
-            if(!Utils.isValidPhone(phone))
+            if(!phone.equals(MainActivity.currentUser.phone))
             {
-                Toast.makeText(getActivity(),getResources().getString(R.string.invalid_phone),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Không được thay đổi số điện thoại!",Toast.LENGTH_LONG).show();
                 return;
             }
 

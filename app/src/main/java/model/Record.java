@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Record implements Serializable {
     public String rid;
     public String uid;
+    public String urlProfile = null;
     public String name;
 
     public String vehicle;
