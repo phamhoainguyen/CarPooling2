@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.admin.carpooling2.PhoneVerification"
     android:orientation="vertical"
+    android:background="@drawable/login"
     >
-    <!--android:background="@drawable/login"-->
+
 
     <TextView
         android:id="@+id/textView7"

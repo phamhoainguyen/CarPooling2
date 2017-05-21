@@ -49,7 +49,8 @@ public class HistorySwiftAdapter extends RecyclerSwipeAdapter<HistorySwiftAdapte
         final Record record = list.get(position);
         viewHolder.txtDestination.setText(record.destination);
         viewHolder.txtOrigin.setText(record.origin);
-        viewHolder.txtTime.setText(record.date +"  " + record.time);
+        viewHolder.txtDate.setText(record.date);
+        viewHolder.txtTime.setText(record.time);
         if(record.urlProfile != null)
         {
             Glide.with(context).load(record.urlProfile)
@@ -98,6 +99,7 @@ public class HistorySwiftAdapter extends RecyclerSwipeAdapter<HistorySwiftAdapte
         private TextView txtTime;
         private ImageView imgProfile;
         public   SwipeLayout swipeLayout;
+        private TextView txtDate;
         // private TextView txtName;
 
 
@@ -110,6 +112,7 @@ public class HistorySwiftAdapter extends RecyclerSwipeAdapter<HistorySwiftAdapte
             txtOrigin =(TextView) v.findViewById(R.id.txtOrigin);
             txtDestination =(TextView) v.findViewById(R.id.txtDestination);
             txtTime = (TextView) v.findViewById(R.id.txtTime);
+            txtDate = (TextView) v.findViewById(R.id.txtDate);
             tvDelete = (TextView) v.findViewById(R.id.tvDelete);
             swipeLayout = (SwipeLayout) v.findViewById(R.id.swift);
             imgProfile = (ImageView) v.findViewById(R.id.imgProfile);

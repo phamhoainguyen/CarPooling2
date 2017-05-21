@@ -7,8 +7,9 @@
     android:orientation="vertical"
     tools:context="com.example.admin.carpooling2.Login"
 
+    android:background="@drawable/login"
     >
-    <!--android:background="@drawable/login"-->
+
 
 
     <ImageView
@@ -17,8 +18,11 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:elevation="1dp"/>
-        <!--app:srcCompat="@drawable/white_logo" />-->
+        android:elevation="1dp"
+        app:srcCompat="@drawable/white_logo"
+        />
+
+
 
     <EditText
         android:id="@+id/editPhone"

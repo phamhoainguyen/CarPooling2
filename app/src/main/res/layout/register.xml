@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.admin.carpooling2.Register"
+    android:background="@drawable/login"
 
     >
-    <!--android:background="@drawable/login"-->
+
 
     <EditText
         android:id="@+id/edtName"
