@@ -125,7 +125,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.Connecti
     public void onStart(){
         super.onStart();
 
-        if(GPSRequirement.checkGPSStatus(this)) {
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -190,7 +189,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.Connecti
 
                 }
             });
-        }
 
 
     }

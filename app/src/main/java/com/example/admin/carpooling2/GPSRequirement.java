@@ -37,6 +37,7 @@ public class GPSRequirement {
                 dialog.cancel();
             }
         });
+        alertDialog.setCancelable(false);
 
         // Showing Alert Message
         alertDialog.show();
@@ -60,6 +61,7 @@ public class GPSRequirement {
             }
         });
 
+        alertDialog.setCancelable(false);
         // Showing Alert Message
         alertDialog.show();
     }

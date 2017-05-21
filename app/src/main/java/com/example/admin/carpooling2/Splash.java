@@ -146,6 +146,66 @@ public class Splash extends AppCompatActivity implements GoogleApiClient.Connect
             }
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+            }
+            else {
+                String checkID;
+                if ((checkID = checkLogin()) != null) {
+                    Query query = FirebaseDatabase.getInstance().getReference().child("users").orderByKey().equalTo(checkID);
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.e(TAG, "onCreate ondataCHange1 data=" + dataSnapshot.toString());
+                            Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                            User user = iterator.next().getValue(User.class);
+                            Log.e(TAG, "onCreate ondataCHange2 user=" + user.toString());
+                            MainActivity.currentUser = user;
+
+                            mGoogleApiClient.connect();
+
+//                        handler = new Handler();
+//                        delayRunnable = new Runnable() {
+//
+//                            @Override
+//                            public void run() {
+//                                // TODO Auto-generated method stub
+//
+//                                Intent intent = new Intent(Splash.this, MainActivity.class);
+//                                finish();
+//                                startActivity(intent);
+//                            }
+//                        };
+//                        handler.postDelayed(delayRunnable, 2000);
+                            Intent intent = new Intent(Splash.this, MainActivity.class);
+                            finish();
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "onCancelled");
+
+                        }
+                    });
+
+                } else {
+                    Intent intent = new Intent(Splash.this, Login.class);
+                    finish();
+                    startActivity(intent);
+                }
+            }
+        }
+    }
+
+
     @Override
     public void onStop() {
         super.onStop();
