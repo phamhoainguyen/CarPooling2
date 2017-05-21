@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,20 +30,17 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Iterator;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import jp.wasabeef.glide.transformations.CropSquareTransformation;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import model.Record;
 import model.Route;
 import model.User;
 import utils.DirectionFinder;
 import utils.DirectionFinderListener;
+import utils.Utils;
 
 
 /**
@@ -258,6 +254,9 @@ public class RecordDetail extends Fragment implements OnMapReadyCallback, Direct
 
                 .title(route.startAddress)
                 .position(route.startLocation));
+        mMap.addMarker(new MarkerOptions()
+                .position(Utils.getCenterPointOfRoute(route))).setIcon(Utils.createPureTextIcon(route.distance + "\n"+ route.duration));
+
         mMap.addMarker(new MarkerOptions()
 
                 .title(route.endAddress)

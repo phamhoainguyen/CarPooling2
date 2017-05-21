@@ -27,7 +27,10 @@ import model.Route;
 
 public class Utils {
 
+    public static int mSortBy = Const.SORT_BY_TIME;
     public static String currentUserAddress = null;
+    public static int originRadius = 20;
+    public static int destinationRadius = 20;
 
 
     public static boolean isValidEmail (String email)

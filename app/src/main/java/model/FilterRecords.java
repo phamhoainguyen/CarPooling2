@@ -2,6 +2,8 @@ package model;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import utils.Utils;
+
 /**
  * Created by phamh on 5/2/2017.
  */
@@ -40,9 +42,9 @@ public class FilterRecords {
 
 
     // kiểm tra có nằm trong bán kính radius hay không?
-    public static boolean checkRegion(Record temp, Record searchCondition, int radius){
-        if(calDistance(temp.startLocation, searchCondition.startLocation) * DISTANCE_UNIT  <= radius
-                && calDistance(temp.endLocation, searchCondition.endLocation) * DISTANCE_UNIT <= radius)
+    public static boolean checkRegion(Record temp, Record searchCondition){
+        if(calDistance(temp.startLocation, searchCondition.startLocation) * DISTANCE_UNIT  <= Utils.originRadius
+                && calDistance(temp.endLocation, searchCondition.endLocation) * DISTANCE_UNIT <= Utils.destinationRadius)
             return true;
         return false;
     }
@@ -55,9 +57,9 @@ public class FilterRecords {
     }
 
 
-    public static boolean checkAllConditions(Record temp, Record seachCondition, int radius){
+    public static boolean checkAllConditions(Record temp, Record seachCondition){
         if( checkValidUsers(temp) && checkVehicle(temp, seachCondition)
-                && checkTime(temp, seachCondition) && checkRegion(temp, seachCondition, radius))
+                && checkTime(temp, seachCondition) && checkRegion(temp, seachCondition))
             return true;
         return false;
     }

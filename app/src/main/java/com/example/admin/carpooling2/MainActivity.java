@@ -118,6 +118,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer,new Setting()).addToBackStack(null).commit();
+
             return true;
         }
 
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity
 
         // chuyển đổi sang fragment search
         if (id == R.id.nav_search) {
-            fragmentManager.beginTransaction().replace(R.id.fragmentContainer,new Search()).addToBackStack(null).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, new Search()).addToBackStack(null).commit();
 
         }
 

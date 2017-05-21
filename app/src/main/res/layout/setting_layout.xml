@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewSortBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sắp xếp kết quả theo:"
+        android:textSize="20sp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupSortBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thời gian" />
+
+        <RadioButton
+            android:id="@+id/radioButtonDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Khoảng cách" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewRadius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bán kính tại vị trí khởi hành: "
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"/>
+
+    <SeekBar
+        android:id="@+id/seekBarRadius"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+        android:id="@+id/textViewDestinationRadius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bán kính tại vị trí kết thúc: "
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"/>
+
+    <SeekBar
+        android:id="@+id/seekBarDestinationRadius"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</LinearLayout>

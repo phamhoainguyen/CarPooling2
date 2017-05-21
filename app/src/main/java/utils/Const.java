@@ -19,5 +19,7 @@ public class Const {
     public  static  final String  VERIFY_CHECK_URL = "http://uploadviet.mobi/CarPooling/comfirm.php?" ;
 
 
+    public static final int SORT_BY_TIME = 1;
+    public static final int SORT_BY_DISTANCE = 2;
 
 }

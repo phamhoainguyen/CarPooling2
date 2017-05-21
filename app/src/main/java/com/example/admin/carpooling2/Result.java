@@ -22,8 +22,11 @@ import java.util.ArrayList;
 
 import model.FilterRecords;
 import model.Record;
+import model.SortByDistance;
 import model.SortByTime;
+import utils.Const;
 import utils.SimpleDividerItemDecoration;
+import utils.Utils;
 
 /**
  * Created by Admin on 4/22/2017.
@@ -88,7 +91,7 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
                         //-------------------------------------------------------------------------------------------
                         // kiểm ta tất cả các điều kiện có thỏa không
                         // 20 là bán kính tìm trong vòng 20km
-                        if (FilterRecords.checkAllConditions(temp, Result.this.searchCondition, 20)){
+                        if (FilterRecords.checkAllConditions(temp, Result.this.searchCondition)){
                             list.add(temp);
                         }
                     }
@@ -98,8 +101,13 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
                     }
 
                     // tạo adapter danh sách các kết quả phù hợp
-                    //list = new SortByDistance().sortByDistance(list, searchCondition);
-                    list = new SortByTime().sortByTime(list, searchCondition);
+                    if(Utils.mSortBy == Const.SORT_BY_DISTANCE) {
+                        list = new SortByDistance().sortByDistance(list, searchCondition);
+                    }
+                    else{
+                        list = new SortByTime().sortByTime(list, searchCondition);
+                    }
+
                     adapter = new RecordAdapter(list, getActivity());
 
                     //Gán các kết quả đó vào recyclerView
