@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,9 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import model.FilterRecords;
 import model.Record;
-import model.SortByDistance;
-import model.SortRecords;
+import model.SortByTime;
 import utils.SimpleDividerItemDecoration;
 
 /**
@@ -87,13 +88,18 @@ public class Result extends Fragment implements RecordAdapter.ClickListener{
                         //-------------------------------------------------------------------------------------------
                         // kiểm ta tất cả các điều kiện có thỏa không
                         // 20 là bán kính tìm trong vòng 20km
-                        if (SortRecords.checkAllConditions(temp, Result.this.searchCondition, 20)){
+                        if (FilterRecords.checkAllConditions(temp, Result.this.searchCondition, 20)){
                             list.add(temp);
                         }
                     }
 
+                    if(list.size() == 0){
+                        Toast.makeText(getActivity(), "Không tìm thấy tuyến đường phù họp!", Toast.LENGTH_LONG).show();
+                    }
+
                     // tạo adapter danh sách các kết quả phù hợp
-                    list = new SortByDistance().sortByDistance(list, searchCondition);
+                    //list = new SortByDistance().sortByDistance(list, searchCondition);
+                    list = new SortByTime().sortByTime(list, searchCondition);
                     adapter = new RecordAdapter(list, getActivity());
 
                     //Gán các kết quả đó vào recyclerView

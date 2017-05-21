@@ -52,7 +52,7 @@ public class SortByDistance {
 //        double distanceBetweenTwoEndLocations = Math.sqrt( ( dEndX * dEndX ) + ( dEndY * dEndY ) );
 
         // tính tổng chênh lệch để sắp xếp record
-        return  SortRecords.calDistance(record.startLocation, searchCondition.startLocation)
-                + SortRecords.calDistance(record.endLocation, searchCondition.endLocation);
+        return  FilterRecords.calDistance(record.startLocation, searchCondition.startLocation)
+                + FilterRecords.calDistance(record.endLocation, searchCondition.endLocation);
     }
 }

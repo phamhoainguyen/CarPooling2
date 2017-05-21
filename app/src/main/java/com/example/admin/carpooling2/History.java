@@ -59,6 +59,9 @@ public class History extends Fragment implements HistorySwiftAdapter.DeleteListe
                    record = data.getValue(Record.class);
                    list.add(record);
                }
+               if(list.size() == 0){
+                   Toast.makeText(getActivity(), "Bạn chưa có hoạt động nào!", Toast.LENGTH_LONG).show();
+               }
                Collections.reverse(list);
                 adapter = new HistorySwiftAdapter(list,getActivity(),History.this);
 
