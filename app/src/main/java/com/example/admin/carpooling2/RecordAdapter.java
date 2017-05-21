@@ -55,7 +55,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         holder.txtDestination.setText(record.destination);
         holder.txtOrigin.setText(record.origin);
         holder.txtName.setText(record.name);
-        holder.txtTimeStart.setText(record.date + "  " + record.time);
+        holder.txtDate.setText(record.date);
+        holder.txtTimeStart.setText(record.time);
         if(record.urlProfile != null)
         {
             Glide.with(context).load(record.urlProfile)
@@ -87,6 +88,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         private TextView txtDestination;
         private TextView txtTimeStart;
        private ImageView imgProfile;
+        private TextView txtDate;
 
 
         public RecordViewHolder(View v)
@@ -97,6 +99,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             txtDestination =(TextView) v.findViewById(R.id.textViewDestination);
             txtTimeStart = (TextView) v.findViewById(R.id.textViewTimeStart);
             imgProfile = (ImageView) v.findViewById(R.id.imgProfile);
+            txtDate = (TextView) v.findViewById(R.id.txtDate);
 
             // Set su kien click cho itemView
             itemView.setOnClickListener(this);

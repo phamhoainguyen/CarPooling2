@@ -16,6 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/border_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="horizontal">
@@ -39,6 +40,7 @@
 
             <TextView
                 android:id="@+id/txtName"
+                android:textColor="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -69,6 +71,7 @@
 
             <TextView
                 android:id="@+id/txtPhone"
+                android:textColor="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/txtCity"
@@ -87,7 +90,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border_content"
+
+        >
 
         <TextView
             android:id="@+id/txtOrigin"
@@ -163,6 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
+            android:textColor="@android:color/holo_green_dark"
             android:gravity="center_horizontal"
             android:text="300000 vnd"
             android:textSize="25sp"
@@ -176,6 +183,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_corner_normal"
-        android:text="Gọi tài xế" />
+        android:text="Gọi tài xế"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>
